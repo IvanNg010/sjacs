@@ -3,377 +3,180 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>App 導覽列與頁內頁示範</title>
-<style>
-    /* 第一頁專屬樣式 */
-.intro-section { margin-bottom: 20px; }
-
-.character-card {
-    display: flex;
-    align-items: center;
-    background: #fff;
-    padding: 15px;
-    border-radius: 12px;
-    margin-bottom: 12px;
-    border: 1px solid #eee;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.02);
-    cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
-}
-
-/* 點擊時的縮放動畫 */
-.character-card:active {
-    transform: scale(0.96);
-}
-
-.avatar {
-    width: 50px;
-    height: 50px;
-    background-color: #ffc069;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    font-weight: bold;
-    font-size: 20px;
-}
-
-.info { flex: 1; margin-left: 15px; }
-.name { font-size: 18px; font-weight: bold; color: #333; }
-.desc { font-size: 14px; color: #888; margin-top: 4px; }
-.arrow { color: #ccc; }
-
-/* 彈窗動畫樣式 */
-.modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.5);
-    z-index: 100;
-    justify-content: center;
-    align-items: center;
-    backdrop-filter: blur(4px); /* 背景模糊 */
-}
-
-.modal-content {
-    background: white;
-    width: 85%;
-    max-width: 350px;
-    padding: 25px;
-    border-radius: 20px;
-    position: relative;
-    transform: translateY(50px);
-    opacity: 0;
-    transition: all 0.3s ease-out;
-}
-
-.modal.active .modal-content {
-    transform: translateY(0);
-    opacity: 1;
-}
-
-.close-btn {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 24px;
-    color: #aaa;
-    cursor: pointer;
-}
-
-/* 內容動畫：滑入 */
-@keyframes slideUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.fade-in {
-    animation: slideUp 0.5s ease forwards;
-}
-    /* 第一頁背景設為淡灰色，更能顯出白色卡片 */
-    #page1 {
-        background-color: #f8f9fa;
-        padding: 20px 15px;
-    }
-
-    .intro-title {
-        font-size: 24px;
-        font-weight: 800;
-        margin-bottom: 20px;
-        color: #1a1a1a;
-    }
-
-    /* 仿圖片中的卡片設計 */
-    .character-card {
-        display: flex;
-        align-items: center;
-        background: #ffffff;
-        padding: 20px;
-        border-radius: 24px; /* 較大的圓角 */
-        margin-bottom: 16px;
-        box-shadow: 0 8px 20px rgba(0,0,0,0.05); /* 柔和深度的陰影 */
-        cursor: pointer;
-        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-        border: 1px solid rgba(0,0,0,0.03);
-        
-        /* 初始動畫狀態：稍微向下偏移並透明 */
-        opacity: 0;
-        transform: translateY(20px);
-    }
-
-    /* 卡片進場動畫 */
-    .character-card.show {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
-    .character-card:active {
-        transform: scale(0.95);
-        background-color: #f0f0f0;
-    }
-
-    /* 圓形頭像容器 */
-    .avatar-wrapper {
-        width: 65px;
-        height: 65px;
-        border-radius: 50%;
-        overflow: hidden;
-        border: 2px solid #fff;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        flex-shrink: 0;
-    }
-
-    .avatar-wrapper img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
-    .info-content {
-        flex: 1;
-        margin-left: 18px;
-    }
-
-    .name-text {
-        font-size: 19px;
-        font-weight: 700;
-        color: #2d3436;
-        margin-bottom: 4px;
-    }
-
-    .tagline {
-        font-size: 14px;
-        color: #636e72;
-        background: #f1f2f6;
-        display: inline-block;
-        padding: 2px 10px;
-        border-radius: 20px;
-    }
-
-    .more-icon {
-        color: #dfe6e9;
-        font-size: 20px;
-    }
-</style>
-
-<div id="page1" class="page active">
-    <h2 class="intro-title">認識神婆</h2>
-
-    <div class="character-card" id="card-wang" onclick="showModal('wang')">
-        <div class="avatar-wrapper">
-            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Granny" alt="王婆婆">
-        </div>
-        <div class="info-content">
-            <div class="name-text">王婆婆</div>
-            <div class="tagline">資深米卦大師</div>
-        </div>
-        <div class="more-icon">❯</div>
-    </div>
-
-    <div class="character-card" id="card-li" onclick="showModal('li')">
-        <div class="avatar-wrapper">
-            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Auntie" alt="李阿姨">
-        </div>
-        <div class="info-content">
-            <div class="name-text">李阿姨</div>
-            <div class="tagline">心靈諮詢、塔羅</div>
-        </div>
-        <div class="more-icon">❯</div>
-    </div>
-</div>
+    <title>神婆 App - Tailwind 版</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* 自定義動畫：處理卡片滑入效果 */
+        .card-enter {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .card-enter.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* 隱藏滾動條但保持功能 */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
 </head>
-<body>
+<body class="bg-gray-100 flex justify-center items-center min-h-screen">
 
-<div class="app-container">
+    <div class="relative w-full max-w-[414px] h-[896px] bg-white shadow-2xl overflow-hidden flex flex-col border-gray-200 border">
+        
+        <header class="p-6 border-b border-gray-100">
+            <h1 id="app-header" class="text-2xl font-extrabold text-gray-800 transition-all duration-300">認識神婆</h1>
+        </header>
 
-    <div class="header" id="app-header">Tab 1 這是第一頁標題</div>
+        <main class="flex-1 overflow-y-auto p-4 pb-24 no-scrollbar">
+            
+            <section id="page1" class="page block">
+                <div class="space-y-4">
+                    <div id="card-wang" onclick="showModal('wang')" 
+                         class="card-enter flex items-center bg-white p-5 rounded-[24px] shadow-sm border border-gray-50 cursor-pointer active:scale-95 active:bg-gray-50 transition-all duration-200">
+                        <div class="w-16 h-16 rounded-full overflow-hidden border-2 border-white shadow-md flex-shrink-0">
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Granny" alt="王婆婆" class="w-full h-full object-cover">
+                        </div>
+                        <div class="ml-4 flex-1">
+                            <h2 class="text-lg font-bold text-gray-800">王婆婆</h2>
+                            <span class="inline-block px-3 py-1 mt-1 text-xs font-medium text-gray-500 bg-gray-100 rounded-full">資深米卦大師</span>
+                        </div>
+                        <div class="text-gray-300">❯</div>
+                    </div>
 
-    <div class="main-content">
-<div id="page1" class="page active">
-    <div class="intro-section">
-        <h3>推薦神婆</h3>
-        <p>點擊頭像了解更多資訊</p>
-    </div>
-
-    <div class="character-list">
-        <div class="character-card fade-in" onclick="showModal('wang')">
-            <div class="avatar">王</div>
-            <div class="info">
-                <div class="name">王婆婆</div>
-                <div class="desc">擅長：米卦、尋物、問事</div>
-            </div>
-            <div class="arrow">❯</div>
-        </div>
-
-        <div class="character-card fade-in" onclick="showModal('li')">
-            <div class="avatar" style="background-color: #ff85c0;">李</div>
-            <div class="info">
-                <div class="name">李阿姨</div>
-                <div class="desc">擅長：塔羅、情感諮詢、淨化</div>
-            </div>
-            <div class="arrow">❯</div>
-        </div>
-    </div>
-
-    <div id="detail-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeModal()">&times;</span>
-            <div id="modal-body">
+                    <div id="card-li" onclick="showModal('li')" 
+                         class="card-enter flex items-center bg-white p-5 rounded-[24px] shadow-sm border border-gray-50 cursor-pointer active:scale-95 active:bg-gray-50 transition-all duration-200">
+                        <div class="w-16 h-16 rounded-full overflow-hidden border-2 border-white shadow-md flex-shrink-0">
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Auntie" alt="李阿姨" class="w-full h-full object-cover">
+                        </div>
+                        <div class="ml-4 flex-1">
+                            <h2 class="text-lg font-bold text-gray-800">李阿姨</h2>
+                            <span class="inline-block px-3 py-1 mt-1 text-xs font-medium text-gray-500 bg-gray-100 rounded-full">心靈諮詢、塔羅</span>
+                        </div>
+                        <div class="text-gray-300">❯</div>
+                    </div>
                 </div>
-        </div>
-    </div>
-</div>
+            </section>
 
-        <div id="page2" class="page">
-            <div class="sub-nav">
-                <div class="sub-nav-item active" onclick="switchSubPage(1)">1</div>
-                <div class="sub-nav-item" onclick="switchSubPage(2)">2</div>
-                <div class="sub-nav-item" onclick="switchSubPage(3)">3</div>
+            <section id="page2" class="page hidden">
+                <div class="flex border-b border-gray-200 mb-4">
+                    <button onclick="switchSubPage(1)" class="sub-nav-btn flex-1 py-3 text-gray-500 border-b-2 border-transparent active-sub">1</button>
+                    <button onclick="switchSubPage(2)" class="sub-nav-btn flex-1 py-3 text-gray-500 border-b-2 border-transparent">2</button>
+                    <button onclick="switchSubPage(3)" class="sub-nav-btn flex-1 py-3 text-gray-500 border-b-2 border-transparent">3</button>
+                </div>
+                <div id="sub-page-1" class="sub-page block text-gray-700 p-2">22222222222222222222</div>
+                <div id="sub-page-2" class="sub-page hidden text-gray-700 p-2">子頁面 2 的開發內容</div>
+                <div id="sub-page-3" class="sub-page hidden text-gray-700 p-2">子頁面 3 的開發內容</div>
+            </section>
+
+            <section id="page3" class="page hidden text-gray-700">3333333333333333</section>
+            <section id="page4" class="page hidden text-gray-700">4444444444444</section>
+            <section id="page5" class="page hidden text-gray-700">55555555555555555</section>
+        </main>
+
+        <nav class="absolute bottom-0 w-full h-20 bg-white border-t border-gray-100 flex justify-around items-center px-2 z-50">
+            <button onclick="switchPage(1, '認識神婆')" class="nav-btn flex flex-col items-center flex-1 text-blue-500">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
+            </button>
+            <button onclick="switchPage(2, '詳細資訊')" class="nav-btn flex flex-col items-center flex-1 text-gray-400">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M3 5v14h18V7h-7l-2-2H3zm2 2h4l2 2h8v10H5V7z"/></svg>
+            </button>
+            <button onclick="switchPage(3, '記事本')" class="nav-btn flex flex-col items-center flex-1 text-gray-400">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm2 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+            </button>
+            <button onclick="switchPage(4, '通知')" class="nav-btn flex flex-col items-center flex-1 text-gray-400">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z"/></svg>
+            </button>
+            <button onclick="switchPage(5, '個人中心')" class="nav-btn flex flex-col items-center flex-1 text-gray-400">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+            </button>
+        </nav>
+
+        <div id="modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/40 backdrop-blur-sm">
+            <div id="modal-content" class="bg-white w-full max-w-sm rounded-[32px] p-8 transition-all duration-300 transform translate-y-10 opacity-0 relative">
+                <button onclick="closeModal()" class="absolute top-4 right-6 text-gray-400 text-2xl">&times;</button>
+                <div id="modal-body"></div>
             </div>
-
-            <div id="sub-page-1" class="sub-page active">
-                <div class="page-text">22222222222222222222</div>
-            </div>
-            <div id="sub-page-2" class="sub-page">
-                <div class="page-text">這裡是 Tab 2 裡面的第 2 個子頁面內容。</div>
-            </div>
-            <div id="sub-page-3" class="sub-page">
-                <div class="page-text">這裡是 Tab 2 裡面的第 3 個子頁面內容。</div>
-            </div>
-        </div>
-
-        <div id="page3" class="page">
-            <div class="page-text">3333333333333333</div>
-        </div>
-
-        <div id="page4" class="page">
-            <div class="page-text">4444444444444</div>
-        </div>
-
-        <div id="page5" class="page">
-            <div class="page-text">55555555555555555</div>
-        </div>
-    </div>
-
-    <div class="bottom-nav">
-        <div class="nav-item active" onclick="switchPage(1, 'Tab 1 這是第一頁標題')">
-            <svg class="nav-icon" viewBox="0 0 24 24"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
-        </div>
-        <div class="nav-item" onclick="switchPage(2, 'Tab 2 這是第二頁標題')">
-            <svg class="nav-icon" viewBox="0 0 24 24"><path d="M3 5v14h18V7h-7l-2-2H3zm2 2h4l2 2h8v10H5V7z"/></svg>
-        </div>
-        <div class="nav-item" onclick="switchPage(3, 'Tab 3 這是第三頁標題')">
-            <svg class="nav-icon" viewBox="0 0 24 24"><path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm2 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
-        </div>
-        <div class="nav-item" onclick="switchPage(4, 'Tab 4 這是第四頁標題')">
-            <svg class="nav-icon" viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z"/></svg>
-        </div>
-        <div class="nav-item" onclick="switchPage(5, 'Tab 5 這是第五頁標題')">
-            <svg class="nav-icon" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
         </div>
     </div>
 
-</div>
+    <script>
+        // 資料庫
+        const characterData = {
+            wang: { name: "王婆婆", detail: "王婆婆在廟街已有三十年經驗，擅長傳統米卦來為信眾指點迷津，對於尋物特別有一套。", tags: ["資深", "傳統米卦"] },
+            li: { name: "李阿姨", detail: "風格親切，結合西方的塔羅牌與東方的能量觀察，擅長解決情感困擾。", tags: ["溫柔", "塔羅占卜"] }
+        };
 
-<script>
-    // 切換主頁面
-    function switchPage(pageIndex, titleText) {
-        // 更新標題
-        document.getElementById('app-header').innerText = titleText;
-
-        // 隱藏所有頁面，顯示目標頁面
-        document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
-        document.getElementById('page' + pageIndex).classList.add('active');
-
-        // 更新底部導覽列的狀態 (反藍)
-        document.querySelectorAll('.nav-item').forEach((item, index) => {
-            if (index + 1 === pageIndex) {
-                item.classList.add('active');
-            } else {
-                item.classList.remove('active');
-            }
+        // 初始進場動畫
+        document.addEventListener("DOMContentLoaded", () => {
+            triggerCardAnimation();
         });
-    }
 
-    // 切換 第二頁的「頁內頁」
-    function switchSubPage(subIndex) {
-        // 隱藏所有子頁面，顯示目標子頁面
-        document.querySelectorAll('.sub-page').forEach(page => page.classList.remove('active'));
-        document.getElementById('sub-page-' + subIndex).classList.add('active');
+        function triggerCardAnimation() {
+            const cards = document.querySelectorAll('.card-enter');
+            cards.forEach((card, index) => {
+                card.classList.remove('show');
+                setTimeout(() => card.classList.add('show'), index * 150);
+            });
+        }
 
-        // 更新頁內頁導覽列的狀態 (反藍底線)
-        document.querySelectorAll('.sub-nav-item').forEach((item, index) => {
-            if (index + 1 === subIndex) {
-                item.classList.add('active');
-            } else {
-                item.classList.remove('active');
-            }
-        });
-    }
-    // 存放神婆的詳細資料
-const characterData = {
-    wang: {
-        name: "王婆婆",
-        detail: "王婆婆在廟街已有三十年經驗，是當地非常有名的長者。她主要透過傳統米卦來為信眾指點迷津，對於尋找遺失物品特別有一套。",
-        tags: ["資深", "傳統米卦", "尋物專家"]
-    },
-    li: {
-        name: "李阿姨",
-        detail: "李阿姨風格親切，像是鄰家大姊姊。她結合了西方的塔羅牌與東方的能量觀察，擅長解決年輕男女的情感困擾與職場壓力。",
-        tags: ["溫柔", "塔羅占卜", "心靈淨化"]
-    }
-};
+        // 主頁面切換
+        function switchPage(index, title) {
+            document.getElementById('app-header').innerText = title;
+            document.querySelectorAll('.page').forEach((p, i) => {
+                p.classList.toggle('hidden', i + 1 !== index);
+                p.classList.toggle('block', i + 1 === index);
+            });
+            document.querySelectorAll('.nav-btn').forEach((btn, i) => {
+                btn.classList.toggle('text-blue-500', i + 1 === index);
+                btn.classList.toggle('text-gray-400', i + 1 !== index);
+            });
+            if(index === 1) triggerCardAnimation();
+        }
 
-function showModal(key) {
-    const data = characterData[key];
-    const modal = document.getElementById('detail-modal');
-    const body = document.getElementById('modal-body');
+        // 頁內頁切換
+        function switchSubPage(index) {
+            document.querySelectorAll('.sub-page').forEach((p, i) => {
+                p.classList.toggle('hidden', i + 1 !== index);
+                p.classList.toggle('block', i + 1 === index);
+            });
+            document.querySelectorAll('.sub-nav-btn').forEach((btn, i) => {
+                btn.classList.toggle('text-blue-500', i + 1 === index);
+                btn.classList.toggle('border-blue-500', i + 1 === index);
+                btn.classList.toggle('text-gray-500', i + 1 !== index);
+                btn.classList.toggle('border-transparent', i + 1 !== index);
+            });
+        }
 
-    // 生成彈窗內容
-    body.innerHTML = `
-        <h2 style="color: #1890ff;">${data.name}</h2>
-        <div style="margin: 10px 0;">
-            ${data.tags.map(tag => `<span style="background:#e6f7ff; color:#1890ff; padding:2px 8px; border-radius:4px; font-size:12px; margin-right:5px;">#${tag}</span>`).join('')}
-        </div>
-        <p style="color: #666; line-height: 1.6; margin-top: 15px;">${data.detail}</p>
-        <button onclick="closeModal()" style="width:100%; margin-top:20px; padding:10px; background:#1890ff; color:white; border:none; border-radius:8px;">了解更多詳情</button>
-    `;
+        // Modal 控制
+        function showModal(key) {
+            const data = characterData[key];
+            const modal = document.getElementById('modal');
+            const content = document.getElementById('modal-content');
+            document.getElementById('modal-body').innerHTML = `
+                <h2 class="text-2xl font-bold text-gray-800">${data.name}</h2>
+                <div class="flex gap-2 mt-2">
+                    ${data.tags.map(t => `<span class="bg-blue-50 text-blue-500 px-2 py-1 rounded-md text-xs font-semibold">#${t}</span>`).join('')}
+                </div>
+                <p class="mt-4 text-gray-600 leading-relaxed">${data.detail}</p>
+                <button onclick="closeModal()" class="w-full mt-8 bg-blue-500 text-white py-4 rounded-2xl font-bold shadow-lg shadow-blue-200">關閉</button>
+            `;
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                content.classList.remove('translate-y-10', 'opacity-0');
+            }, 10);
+        }
 
-    modal.style.display = 'flex';
-    // 延遲一點點加上 active class 觸發 CSS 動畫
-    setTimeout(() => modal.classList.add('active'), 10);
-}
+        function closeModal() {
+            const modal = document.getElementById('modal');
+            const content = document.getElementById('modal-content');
+            content.classList.add('translate-y-10', 'opacity-0');
+            setTimeout(() => modal.classList.add('hidden'), 300);
+        }
 
-function closeModal() {
-    const modal = document.getElementById('detail-modal');
-    modal.classList.remove('active');
-    setTimeout(() => modal.style.display = 'none', 300);
-}
-</script>
-
+        // 初始化子頁面樣式
+        switchSubPage(1);
+    </script>
 </body>
 </html>
