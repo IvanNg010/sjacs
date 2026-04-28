@@ -5,6 +5,95 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>App 導覽列與頁內頁示範</title>
 <style>
+    /* 第一頁專屬樣式 */
+.intro-section { margin-bottom: 20px; }
+
+.character-card {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    border: 1px solid #eee;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+/* 點擊時的縮放動畫 */
+.character-card:active {
+    transform: scale(0.96);
+}
+
+.avatar {
+    width: 50px;
+    height: 50px;
+    background-color: #ffc069;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.info { flex: 1; margin-left: 15px; }
+.name { font-size: 18px; font-weight: bold; color: #333; }
+.desc { font-size: 14px; color: #888; margin-top: 4px; }
+.arrow { color: #ccc; }
+
+/* 彈窗動畫樣式 */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 100;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(4px); /* 背景模糊 */
+}
+
+.modal-content {
+    background: white;
+    width: 85%;
+    max-width: 350px;
+    padding: 25px;
+    border-radius: 20px;
+    position: relative;
+    transform: translateY(50px);
+    opacity: 0;
+    transition: all 0.3s ease-out;
+}
+
+.modal.active .modal-content {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    color: #aaa;
+    cursor: pointer;
+}
+
+/* 內容動畫：滑入 */
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+    animation: slideUp 0.5s ease forwards;
+}
     /* 第一頁背景設為淡灰色，更能顯出白色卡片 */
     #page1 {
         background-color: #f8f9fa;
@@ -245,6 +334,45 @@
             }
         });
     }
+    // 存放神婆的詳細資料
+const characterData = {
+    wang: {
+        name: "王婆婆",
+        detail: "王婆婆在廟街已有三十年經驗，是當地非常有名的長者。她主要透過傳統米卦來為信眾指點迷津，對於尋找遺失物品特別有一套。",
+        tags: ["資深", "傳統米卦", "尋物專家"]
+    },
+    li: {
+        name: "李阿姨",
+        detail: "李阿姨風格親切，像是鄰家大姊姊。她結合了西方的塔羅牌與東方的能量觀察，擅長解決年輕男女的情感困擾與職場壓力。",
+        tags: ["溫柔", "塔羅占卜", "心靈淨化"]
+    }
+};
+
+function showModal(key) {
+    const data = characterData[key];
+    const modal = document.getElementById('detail-modal');
+    const body = document.getElementById('modal-body');
+
+    // 生成彈窗內容
+    body.innerHTML = `
+        <h2 style="color: #1890ff;">${data.name}</h2>
+        <div style="margin: 10px 0;">
+            ${data.tags.map(tag => `<span style="background:#e6f7ff; color:#1890ff; padding:2px 8px; border-radius:4px; font-size:12px; margin-right:5px;">#${tag}</span>`).join('')}
+        </div>
+        <p style="color: #666; line-height: 1.6; margin-top: 15px;">${data.detail}</p>
+        <button onclick="closeModal()" style="width:100%; margin-top:20px; padding:10px; background:#1890ff; color:white; border:none; border-radius:8px;">了解更多詳情</button>
+    `;
+
+    modal.style.display = 'flex';
+    // 延遲一點點加上 active class 觸發 CSS 動畫
+    setTimeout(() => modal.classList.add('active'), 10);
+}
+
+function closeModal() {
+    const modal = document.getElementById('detail-modal');
+    modal.classList.remove('active');
+    setTimeout(() => modal.style.display = 'none', 300);
+}
 </script>
 
 </body>
