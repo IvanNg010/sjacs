@@ -96,12 +96,12 @@
             <div id="step-content-3" class="step-content hidden space-y-6">
                 <div class="bg-white p-8 rounded-[32px] border border-gray-100 shadow-sm"><h3 class="text-xl font-bold text-gray-800">念誦咒語</h3><p class="text-sm text-gray-400 mt-1 font-medium">聆聽神婆念誦傳統咒語。</p></div>
                 <div class="bg-white p-8 rounded-[32px] border border-gray-100 text-center">
-                    <h3 id="chant-status" class="text-lg font-bold text-gray-800 mb-6">正在準備中...</h3>
+                    <h3 id="chant-status" class="text-lg font-bold text-gray-800 mb-6">正在準備中……</h3>
                     <div class="flex justify-center gap-4 mb-6">
-                        <button id="replay-audio-btn" onclick="startChant()" class="hidden px-6 py-2 bg-blue-100 text-blue-600 rounded-full text-xs font-bold transition-all hover:bg-blue-200">🔄 重播音訊</button>
-                        <button id="skip-audio-btn" onclick="stopChant()" class="hidden px-6 py-2 bg-blue-600 text-white rounded-full text-xs font-bold transition-all">⏩ 快進</button>
+                        <button id="replay-audio-btn" onclick="startChant()" class="hidden px-6 py-2 bg-blue-100 text-blue-600 rounded-full text-xs font-bold transition-all hover:bg-blue-200">重播</button>
+                        <button id="skip-audio-btn" onclick="stopChant()" class="hidden px-6 py-2 bg-blue-600 text-white rounded-full text-xs font-bold transition-all">跳過</button>
                     </div>
-                    <button id="finish-chant-btn" disabled onclick="audioPlayer.pause(); unlockStep(4);" class="w-full py-4 bg-gray-200 text-gray-400 rounded-2xl font-bold">等待咒語完成...</button>
+                    <button id="finish-chant-btn" disabled onclick="audioPlayer.pause(); unlockStep(4);" class="w-full py-4 bg-gray-200 text-gray-400 rounded-2xl font-bold">等待咒語完成……</button>
                 </div>
                 <div class="flex gap-4"><button onclick="switchStep(2)" class="flex-1 py-4 bg-gray-100 rounded-2xl font-bold">上一步</button></div>
             </div>
@@ -123,7 +123,7 @@
                 <div class="bg-green-50 p-10 rounded-[32px] border-l-8 border-green-500 text-center">
                     <h3 class="text-lg font-bold text-green-800 mb-8">進行祈福儀式，放下怨恨，重新開始。</h3>
                     <div class="flex justify-center gap-8 text-5xl mb-10"><span class="animate-bounce">🕊️</span><span class="animate-pulse scale-125">💚</span><span class="animate-bounce">🌸</span></div>
-                    <button id="final-bless-btn" disabled onclick="alert('流程已圓滿完成！')" class="w-full py-5 bg-gray-200 text-gray-400 rounded-[24px] font-bold">等待儀式中...</button>
+                    <button id="final-bless-btn" disabled onclick="alert('流程已圓滿完成！')" class="w-full py-5 bg-gray-200 text-gray-400 rounded-[24px] font-bold">等待儀式中……</button>
                 </div>
             </div>
         </section>
@@ -289,7 +289,7 @@
             const skipBtn = document.getElementById('skip-audio-btn');
             skipBtn.disabled = true; skipBtn.className = "px-6 py-2 bg-gray-200 text-gray-400 rounded-full text-xs font-bold cursor-not-allowed";
             const finishBtn = document.getElementById('finish-chant-btn');
-            finishBtn.disabled = false; finishBtn.innerText = "咒語念誦完成！";
+            finishBtn.disabled = false; finishBtn.innerText = "咒語念誦完成，下一步！";
             finishBtn.className = "w-full py-4 bg-blue-600 text-white rounded-2xl font-bold shadow-lg shadow-blue-100";
         }
 
