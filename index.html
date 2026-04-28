@@ -2,7 +2,7 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>神婆手記</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -12,6 +12,7 @@
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         .disabled-nav { opacity: 0.4; cursor: not-allowed !important; pointer-events: none; }
         .card-completed { border-left: 8px solid #10b981 !important; background-color: #f0fdf4 !important; }
+        .step-content button { touch-action: manipulation; }
     </style>
 </head>
 <body class="bg-gray-50 min-h-screen flex flex-col font-sans">
