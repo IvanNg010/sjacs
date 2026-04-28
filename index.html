@@ -29,12 +29,12 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div id="card-wang" onclick="readShaman('wang')" class="card-enter flex items-center bg-white p-6 rounded-[32px] shadow-sm border border-gray-100 cursor-pointer hover:shadow-xl hover:-translate-y-1 active:scale-95 transition-all duration-300">
                     <div class="w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-md flex-shrink-0">
-                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Granny&backgroundColor=ffdfbf" alt="王婆婆" class="w-full h-full object-cover">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Granny&backgroundColor=ffdfbf" alt="梁婆婆" class="w-full h-full object-cover">
                     </div>
                     <div class="ml-6 flex-1">
-                        <h2 class="text-xl font-bold text-gray-800">王婆婆</h2>
+                        <h2 class="text-xl font-bold text-gray-800">梁婆婆</h2>
                         <p class="text-xs font-bold text-amber-600 mb-2 uppercase tracking-widest">傳統神婆</p>
-                        <p class="text-gray-500 text-sm leading-relaxed">在橋下從業三十年的老神婆，見證了無數人的悲歡離合。</p>
+                        <p class="text-gray-500 text-sm leading-relaxed">鵝頸橋打小人檔口中年資最長的一位，被形容為「大師姐」。</p>
                     </div>
                     <div id="status-wang" class="text-gray-300 ml-2 font-bold text-sm">❯</div>
                 </div>
@@ -46,7 +46,7 @@
                     <div class="ml-6 flex-1">
                         <h2 class="text-xl font-bold text-gray-800">李阿姨</h2>
                         <p class="text-xs font-bold text-blue-500 mb-2 uppercase tracking-widest">新派神婆</p>
-                        <p class="text-gray-500 text-sm leading-relaxed">結合現代心理學與傳統占卜的新一代神婆。</p>
+                        <p class="text-gray-500 text-sm leading-relaxed">結合現代心理學的新一代神婆。</p>
                     </div>
                     <div id="status-li" class="text-gray-300 ml-2 font-bold text-sm">❯</div>
                 </div>
@@ -97,12 +97,12 @@
             <div id="step-content-3" class="step-content hidden space-y-6">
                 <div class="bg-white p-8 rounded-[32px] border border-gray-100 shadow-sm"><h3 class="text-xl font-bold text-gray-800">念誦咒語</h3><p class="text-sm text-gray-400 mt-1 font-medium">聆聽神婆念誦傳統咒語。</p></div>
                 <div class="bg-white p-8 rounded-[32px] border border-gray-100 text-center">
-                    <h3 id="chant-status" class="text-lg font-bold text-gray-800 mb-6">正在準備中……</h3>
+                    <h3 id="chant-status" class="text-lg font-bold text-gray-800 mb-6">正在準備中...</h3>
                     <div class="flex justify-center gap-4 mb-6">
                         <button id="replay-audio-btn" onclick="startChant()" class="hidden px-6 py-2 bg-blue-100 text-blue-600 rounded-full text-xs font-bold transition-all hover:bg-blue-200">重播</button>
                         <button id="skip-audio-btn" onclick="stopChant()" class="hidden px-6 py-2 bg-blue-600 text-white rounded-full text-xs font-bold transition-all">跳過</button>
                     </div>
-                    <button id="finish-chant-btn" disabled onclick="audioPlayer.pause(); unlockStep(4);" class="w-full py-4 bg-gray-200 text-gray-400 rounded-2xl font-bold">等待咒語完成……</button>
+                    <button id="finish-chant-btn" disabled onclick="audioPlayer.pause(); unlockStep(4);" class="w-full py-4 bg-gray-200 text-gray-400 rounded-2xl font-bold">等待咒語完成...</button>
                 </div>
                 <div class="flex gap-4"><button onclick="switchStep(2)" class="flex-1 py-4 bg-gray-100 rounded-2xl font-bold">上一步</button></div>
             </div>
@@ -124,7 +124,7 @@
                 <div class="bg-green-50 p-10 rounded-[32px] border-l-8 border-green-500 text-center">
                     <h3 class="text-lg font-bold text-green-800 mb-8">進行祈福儀式，放下怨恨，重新開始。</h3>
                     <div class="flex justify-center gap-8 text-5xl mb-10"><span class="animate-bounce">🕊️</span><span class="animate-pulse scale-125">💚</span><span class="animate-bounce">🌸</span></div>
-                    <button id="final-bless-btn" disabled onclick="alert('流程已圓滿完成！')" class="w-full py-5 bg-gray-200 text-gray-400 rounded-[24px] font-bold">等待儀式中……</button>
+                    <button id="final-bless-btn" disabled onclick="alert('流程已圓滿完成！')" class="w-full py-5 bg-gray-200 text-gray-400 rounded-[24px] font-bold">等待儀式中...</button>
                 </div>
             </div>
         </section>
@@ -157,19 +157,28 @@
         let hitAudio = new Audio('hit.mp3');
         let isFirstTimeStep3 = true; 
 
+        // 修正：梁婆婆詳細 QA 資料
         const shamanData = {
             wang: {
-                name: "王婆婆", tag: "傳統神婆", tagClass: "text-amber-600",
+                name: "梁婆婆", tag: "傳統神婆", tagClass: "text-amber-600",
                 qa: [
-                    { q: "為甚麼選擇成為神婆？", a: "年輕時家裏窮，跟着長輩學的。後來發現，很多人來找我，其實只是想找個人説説心裏話。" },
-                    { q: "您覺得打小人真的有用嗎？", a: "有用、沒用，信的人就有用。但更重要的是，打完之後，心裏的氣消了，能重新面對生活。" },
-                    { q: "您怎麼看現在的年輕人？", a: "現在的年輕人壓力大，有時候需要一些傳統的方式來發洩。但我也告訴他們，打小人只是個開始，真正的問題還是要自己解決。" }
+                    { q: "梁婆婆的打小人經驗有多久？", a: "打了20多年，現在90多歲。" },
+                    { q: "梁婆婆的打小人程序是怎樣的？", a: "程序相當傳統，依次為：<br>1. 叫顧客在簿上寫下名字及打小人目標<br>2. 點香<br>3. 拜／求神<br>4. 開始打小人<br>5. 再次求神，燒小人紙（上有一男一女圖案）<br>6. 叫顧客伸出雙手<br>7. 燒簿<br>8. 擲靈筊，必須擲出聖筊（好運），如沒有則再擲。" },
+                    { q: "打小人與「五鬼」有何關係？", a: "打五鬼非常重要，用意是趕走小人，並非報復或打人，而是驅逐。" },
+                    { q: "跟誰學打小人？", a: "自學，沒有跟師傅。1983年從大陸到港，以前是打自家工。" },
+                    { q: "收徒弟嗎？", a: "不收徒弟。" },
+                    { q: "收利是時有何特別？", a: "過程非常隆重。" },
+                    { q: "有熟客嗎？", a: "有，他們已幫襯10多年，主要做熟客生意。（訪問期間便有熟客出現）" },
+                    { q: "梁婆婆接受電子支付嗎？", a: "不接受。只收現金，不收支付寶、微信、PayMe。" },
+                    { q: "梁婆婆認為其他打小人師傅有何問題？", a: "認為其他人不正宗。不正宗的打小人帶有報復性質，事後可能給符、要求客人跟身一年，而且會收徒弟。" },
+                    { q: "正宗與不正宗在收費上有何分別？", a: "正宗打小人只收$50，但最終費用為$200；不正宗的會收徒弟，做法不同。" },
+                    { q: "正宗打小人的核心精神是甚麼？", a: "只是趕走小人，而非報復。" }
                 ]
             },
             li: {
                 name: "李阿姨", tag: "新派神婆", tagClass: "text-blue-500",
                 qa: [
-                    { q: "您是如何將傳統與現代結合的？", a: "我學過心理學，發現很多傳統儀式其實有心理療癒的作用。打小人就像情緒宣洩，祈禱就像正念冥想。" },
+                    { q: "您是如何將傳統與現代結合的？", a: "我學過心理學，發現很多傳統儀式其實有心理療癒的作用。打小人就像情緒宣洩，祈禱就像正念瞑想。" },
                     { q: "您認為傳統文化還需要保留嗎？", a: "當然需要。傳統文化是我們的根，但我們要用現代的方式去理解和運用它，讓它真正幫助到現代人。" },
                     { q: "您對來諮詢的年輕人有甚麼建議？", a: "不要把所有希望都寄託在儀式中。儀式可以給你力量，但真正的改變來自於你的行動和思考。" }
                 ]
@@ -194,7 +203,7 @@
             status.classList.replace('text-gray-300', 'text-green-500');
 
             const data = shamanData[key];
-            let qaHtml = `<div class="mb-8 text-center md:text-left"><p class="text-xs font-black ${data.tagClass} uppercase tracking-[0.2em] mb-1">${data.tag}</p><h2 class="text-3xl font-black text-gray-900">${data.name} 訪談錄</h2></div><div class="space-y-6">${data.qa.map(item => `<div class="bg-gray-50 p-6 rounded-[24px] border border-gray-100"><p class="text-blue-600 font-bold mb-2">Q：${item.q}</p><p class="text-gray-600 leading-relaxed font-medium">A：${item.a}</p></div>`).join('')}</div><button onclick="closeModal()" class="w-full mt-10 bg-gray-900 text-white py-4 rounded-2xl font-bold">了解完畢</button>`;
+            let qaHtml = `<div class="mb-8 text-center md:text-left"><p class="text-xs font-black ${data.tagClass} uppercase tracking-[0.2em] mb-1">${data.tag}</p><h2 class="text-3xl font-black text-gray-900">${data.name} 訪談錄</h2></div><div class="space-y-6">${data.qa.map(item => `<div class="bg-gray-50 p-6 rounded-[24px] border border-gray-100"><p class="text-blue-600 font-bold mb-2">問：${item.q}</p><p class="text-gray-600 leading-relaxed font-medium">答：${item.a}</p></div>`).join('')}</div><button onclick="closeModal()" class="w-full mt-10 bg-gray-900 text-white py-4 rounded-2xl font-bold">了解完畢</button>`;
             document.getElementById('modal-body').innerHTML = qaHtml;
             const modal = document.getElementById('modal');
             const content = document.getElementById('modal-content');
@@ -206,7 +215,6 @@
                 const msg = document.getElementById('unlock-msg');
                 msg.innerText = "✓ 已了解神婆，流程、通知與個人中心已開放。";
                 msg.className = "mt-10 text-center text-green-500 font-bold animate-pulse";
-                // 觸發顯示下一步按鈕
                 document.getElementById('next-page-container').classList.remove('hidden');
             }
         }
@@ -290,7 +298,7 @@
             const skipBtn = document.getElementById('skip-audio-btn');
             skipBtn.disabled = true; skipBtn.className = "px-6 py-2 bg-gray-200 text-gray-400 rounded-full text-xs font-bold cursor-not-allowed";
             const finishBtn = document.getElementById('finish-chant-btn');
-            finishBtn.disabled = false; finishBtn.innerText = "咒語念誦完成，下一步！";
+            finishBtn.disabled = false; finishBtn.innerText = "咒語念誦完成！";
             finishBtn.className = "w-full py-4 bg-blue-600 text-white rounded-2xl font-bold shadow-lg shadow-blue-100";
         }
 
