@@ -3,20 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>神婆訪談錄 - 全螢幕版</title>
+    <title>神婆手記</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        .card-enter {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
-        }
-        .card-enter.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        /* 自定義捲軸樣式 */
+        .card-enter { opacity: 0; transform: translateY(20px); transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1); }
+        .card-enter.show { opacity: 1; transform: translateY(0); }
         .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .disabled-nav { opacity: 0.4; cursor: not-allowed !important; pointer-events: none; }
+        .card-completed { border-left: 8px solid #10b981 !important; background-color: #f0fdf4 !important; }
     </style>
 </head>
 <body class="bg-gray-50 min-h-screen flex flex-col font-sans">
@@ -31,9 +26,7 @@
         
         <section id="page1" class="page block">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                
-                <div id="card-wang" onclick="showModal('wang')" 
-                     class="card-enter flex items-center bg-white p-6 rounded-[32px] shadow-sm border border-gray-100 cursor-pointer hover:shadow-xl hover:-translate-y-1 active:scale-95 transition-all duration-300">
+                <div id="card-wang" onclick="readShaman('wang')" class="card-enter flex items-center bg-white p-6 rounded-[32px] shadow-sm border border-gray-100 cursor-pointer hover:shadow-xl hover:-translate-y-1 active:scale-95 transition-all duration-300">
                     <div class="w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-md flex-shrink-0">
                         <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Granny&backgroundColor=ffdfbf" alt="王婆婆" class="w-full h-full object-cover">
                     </div>
@@ -42,11 +35,10 @@
                         <p class="text-xs font-bold text-amber-600 mb-2 uppercase tracking-widest">傳統神婆</p>
                         <p class="text-gray-500 text-sm leading-relaxed">在橋下從業三十年的老神婆，見證了無數人的悲歡離合。</p>
                     </div>
-                    <div class="text-gray-300 ml-2">❯</div>
+                    <div id="status-wang" class="text-gray-300 ml-2 font-bold text-sm">❯</div>
                 </div>
 
-                <div id="card-li" onclick="showModal('li')" 
-                     class="card-enter flex items-center bg-white p-6 rounded-[32px] shadow-sm border border-gray-100 cursor-pointer hover:shadow-xl hover:-translate-y-1 active:scale-95 transition-all duration-300">
+                <div id="card-li" onclick="readShaman('li')" class="card-enter flex items-center bg-white p-6 rounded-[32px] shadow-sm border border-gray-100 cursor-pointer hover:shadow-xl hover:-translate-y-1 active:scale-95 transition-all duration-300">
                     <div class="w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-md flex-shrink-0">
                         <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Auntie&backgroundColor=d1d5db" alt="李阿姨" class="w-full h-full object-cover">
                     </div>
@@ -55,45 +47,133 @@
                         <p class="text-xs font-bold text-blue-500 mb-2 uppercase tracking-widest">新派神婆</p>
                         <p class="text-gray-500 text-sm leading-relaxed">結合現代心理學與傳統占卜的新一代神婆。</p>
                     </div>
-                    <div class="text-gray-300 ml-2">❯</div>
+                    <div id="status-li" class="text-gray-300 ml-2 font-bold text-sm">❯</div>
                 </div>
+            </div>
+            <div id="unlock-msg" class="mt-10 text-center text-gray-400 text-sm font-medium">請先了解完兩位神婆的訪談，以解鎖後續內容。</div>
+        </section>
 
+        <section id="page2" class="page hidden">
+            <div class="mb-6">
+                <h2 class="text-2xl font-black text-gray-900">打小人流程</h2>
+            </div>
+
+            <div class="flex gap-3 mb-8">
+                <button id="step-btn-1" onclick="switchStep(1)" class="w-10 h-10 rounded-full bg-blue-600 text-white font-bold text-sm">1</button>
+                <button id="step-btn-2" onclick="switchStep(2)" class="w-10 h-10 rounded-full bg-gray-200 text-gray-400 font-bold disabled-nav text-sm">2</button>
+                <button id="step-btn-3" onclick="switchStep(3)" class="w-10 h-10 rounded-full bg-gray-200 text-gray-400 font-bold disabled-nav text-sm">3</button>
+                <button id="step-btn-4" onclick="switchStep(4)" class="w-10 h-10 rounded-full bg-gray-200 text-gray-400 font-bold disabled-nav text-sm">4</button>
+                <button id="step-btn-5" onclick="switchStep(5)" class="w-10 h-10 rounded-full bg-gray-200 text-gray-400 font-bold disabled-nav text-sm">5</button>
+            </div>
+
+            <div id="step-content-1" class="step-content block space-y-6">
+                <div class="bg-white p-8 rounded-[32px] border border-gray-100 shadow-sm">
+                    <h3 class="text-xl font-bold text-gray-800">準備工具</h3>
+                    <p class="text-sm text-gray-400 mt-1">準備小木人、鞋子、香燭等傳統工具。</p>
+                </div>
+                <div class="bg-white p-8 rounded-[32px] border border-gray-100 shadow-sm text-center">
+                    <h3 class="text-lg font-bold mb-8 text-gray-800">點擊物品準備工具 (已準備 <span id="tool-count" class="text-blue-600">0</span>/5)</h3>
+                    <div class="grid grid-cols-5 gap-4">
+                        <button onclick="pickTool(this, 1)" class="tool-btn flex flex-col items-center p-4 rounded-2xl relative border border-transparent transition-all"><span class="text-4xl mb-2">🪵</span> <span class="text-[10px] font-bold text-gray-500">小木人</span><div class="check-mark hidden absolute top-1 right-1 text-green-500 font-bold">✓</div></button>
+                        <button onclick="pickTool(this, 2)" class="tool-btn flex flex-col items-center p-4 rounded-2xl relative border border-transparent transition-all"><span class="text-4xl mb-2">👞</span> <span class="text-[10px] font-bold text-gray-500">鞋子</span><div class="check-mark hidden absolute top-1 right-1 text-green-500 font-bold">✓</div></button>
+                        <button onclick="pickTool(this, 3)" class="tool-btn flex flex-col items-center p-4 rounded-2xl relative border border-transparent transition-all"><span class="text-4xl mb-2">🐯</span> <span class="text-[10px] font-bold text-gray-500">紙老虎</span><div class="check-mark hidden absolute top-1 right-1 text-green-500 font-bold">✓</div></button>
+                        <button onclick="pickTool(this, 4)" class="tool-btn flex flex-col items-center p-4 rounded-2xl relative border border-transparent transition-all"><span class="text-4xl mb-2">📜</span> <span class="text-[10px] font-bold text-gray-500">符咒</span><div class="check-mark hidden absolute top-1 right-1 text-green-500 font-bold">✓</div></button>
+                        <button onclick="pickTool(this, 5)" class="tool-btn flex flex-col items-center p-4 rounded-2xl relative border border-transparent transition-all"><span class="text-4xl mb-2">🕯️</span> <span class="text-[10px] font-bold text-gray-500">香燭</span><div class="check-mark hidden absolute top-1 right-1 text-green-500 font-bold">✓</div></button>
+                    </div>
+                </div>
+                <div id="all-tools-ready" class="hidden bg-green-50 border-l-4 border-green-500 p-6 rounded-2xl"><p class="text-green-700 font-bold">✓ 所有工具已準備完畢</p></div>
+                <div class="flex gap-4 pt-4"><button onclick="switchPage(1, '認識神婆')" class="flex-1 py-4 bg-gray-100 rounded-2xl font-bold">上一步</button><button id="next-step-btn" disabled onclick="unlockStep(2)" class="flex-1 py-4 bg-gray-200 text-gray-400 rounded-2xl font-bold cursor-not-allowed">下一步</button></div>
+            </div>
+
+            <div id="step-content-2" class="step-content hidden space-y-6">
+                <div class="bg-white p-8 rounded-[32px] border border-gray-100 shadow-sm">
+                    <h3 class="text-xl font-bold text-gray-800">書寫名字</h3>
+                    <p class="text-sm text-gray-400 mt-1">在小木人上寫下對方的名字和生辰八字。</p>
+                </div>
+                <div class="bg-amber-50 p-8 rounded-[32px] border border-amber-100 text-center relative flex flex-col items-center">
+                    <h3 class="text-lg font-bold text-amber-900 mb-4">在小木人上寫下對方的名字</h3>
+                    <div class="text-5xl mb-4">🪵</div>
+                    <input id="name-input" onfocus="hideNameAlert()" type="text" placeholder="輸入名字……" class="w-full max-w-xs px-6 py-4 rounded-2xl border-2 border-amber-200 text-center font-bold focus:outline-none z-20">
+                    
+                    <div id="name-alert" class="hidden mt-4 w-full max-w-xs bg-red-500 p-4 rounded-2xl animate-bounce">
+                        <p class="text-white font-black text-sm text-center">請填寫名字！</p>
+                    </div>
+                </div>
+                <div class="flex gap-4"><button onclick="switchStep(1)" class="flex-1 py-4 bg-gray-100 rounded-2xl font-bold">上一步</button><button onclick="checkNameAndNext()" class="flex-1 py-4 bg-blue-600 text-white rounded-2xl font-bold">下一步</button></div>
+            </div>
+
+            <div id="step-content-3" class="step-content hidden space-y-6">
+                <div class="bg-white p-8 rounded-[32px] border border-gray-100 shadow-sm">
+                    <h3 class="text-xl font-bold text-gray-800">念誦咒語</h3>
+                    <p class="text-sm text-gray-400 mt-1 font-medium">神婆念誦傳統咒語，引導你集中注意力。</p>
+                </div>
+                <div class="bg-white p-8 rounded-[32px] border border-gray-100 text-center">
+                    <h3 id="chant-status" class="text-lg font-bold text-gray-800 mb-6">神婆正在念誦咒語……</h3>
+                    <button id="skip-audio-btn" onclick="stopChant()" class="hidden mx-auto mb-4 px-6 py-2 bg-gray-100 rounded-full text-xs font-bold">跳過</button>
+                    <button id="finish-chant-btn" disabled onclick="unlockStep(4)" class="w-full py-4 bg-gray-200 text-gray-400 rounded-2xl font-bold">等待咒語完成...</button>
+                </div>
+                <div class="flex gap-4"><button onclick="switchStep(2)" class="flex-1 py-4 bg-gray-100 rounded-2xl font-bold">上一步</button></div>
+            </div>
+
+            <div id="step-content-4" class="step-content hidden space-y-6">
+                <div class="bg-white p-8 rounded-[32px] border border-gray-100 shadow-sm">
+                    <h3 class="text-xl font-bold text-gray-800">敲打木人</h3>
+                    <p class="text-sm text-gray-400 mt-1">用鞋子敲打小木人，發洩情緒。</p>
+                </div>
+                <div class="bg-white p-8 rounded-[32px] border border-gray-100 text-center">
+                    <h3 class="text-lg font-bold mb-6 text-gray-800">已敲 <span id="hit-count" class="text-red-500">0</span> 次</h3>
+                    <button id="wood-target" onclick="hitWood()" class="text-7xl mb-8 transform transition-transform focus:outline-none">🪵</button>
+                    <div class="flex justify-center gap-2">
+                        <div class="hit-dot w-3 h-3 rounded-full bg-gray-200"></div><div class="hit-dot w-3 h-3 rounded-full bg-gray-200"></div><div class="hit-dot w-3 h-3 rounded-full bg-gray-200"></div><div class="hit-dot w-3 h-3 rounded-full bg-gray-200"></div><div class="hit-dot w-3 h-3 rounded-full bg-gray-200"></div><div class="hit-dot w-3 h-3 rounded-full bg-gray-200"></div><div class="hit-dot w-3 h-3 rounded-full bg-gray-200"></div><div class="hit-dot w-3 h-3 rounded-full bg-gray-200"></div><div class="hit-dot w-3 h-3 rounded-full bg-gray-200"></div><div class="hit-dot w-3 h-3 rounded-full bg-gray-200"></div>
+                    </div>
+                </div>
+                <div class="flex gap-4"><button onclick="switchStep(3)" class="flex-1 py-4 bg-gray-100 rounded-2xl font-bold">上一步</button><button id="next-btn-4" disabled onclick="unlockStep(5)" class="flex-1 py-4 bg-blue-200 text-blue-400 rounded-2xl font-bold">下一步</button></div>
+            </div>
+
+            <div id="step-content-5" class="step-content hidden space-y-6">
+                <div class="bg-white p-8 rounded-[32px] border border-gray-100 shadow-sm">
+                    <h3 class="text-xl font-bold text-gray-800">祈福化解</h3>
+                    <p class="text-sm text-gray-400 mt-1">這代表放下怨恨，重新開始。</p>
+                </div>
+                <div class="bg-green-50 p-10 rounded-[32px] border-l-8 border-green-500 text-center">
+                    <h3 class="text-lg font-bold text-green-800 mb-8">進行祈福儀式，放下怨恨，重新開始。</h3>
+                    <div class="flex justify-center gap-8 text-5xl mb-10">
+                        <span class="animate-bounce">🕊️</span><span class="animate-pulse scale-125">💚</span><span class="animate-bounce">🌸</span>
+                    </div>
+                    <button id="final-bless-btn" disabled onclick="alert('流程已圓滿完成！')" class="w-full py-5 bg-gray-200 text-gray-400 rounded-[24px] font-bold">等待儀式中...</button>
+                </div>
             </div>
         </section>
 
-        <section id="page2" class="page hidden bg-white rounded-3xl p-10 shadow-sm border border-gray-100">
-            <p class="text-gray-400 text-center text-2xl font-mono">22222222222222222222</p>
-        </section>
-        </main>
+        <section id="page3" class="page hidden p-20 text-center text-gray-300">頁面三內容</section>
+        <section id="page4" class="page hidden p-20 text-center text-gray-300">頁面四內容</section>
+        <section id="page5" class="page hidden p-20 text-center text-gray-300">頁面五內容</section>
+    </main>
 
-    <nav class="fixed bottom-0 left-0 w-full bg-white/90 backdrop-blur-lg border-t border-gray-100 z-50">
-        <div class="max-w-5xl mx-auto h-20 flex justify-around items-center px-4">
-            <button onclick="switchPage(1, '認識神婆')" class="nav-btn flex flex-col items-center flex-1 text-blue-600">
-                <svg class="w-6 h-6 mb-1" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                <span class="text-[10px] font-bold">認識神婆</span>
-            </button>
-            <button onclick="switchPage(2, '內容開發')" class="nav-btn flex flex-col items-center flex-1 text-gray-400">
-                <svg class="w-6 h-6 mb-1" fill="currentColor" viewBox="0 0 24 24"><path d="M4 4h16v16H4V4z"/></svg>
-                <span class="text-[10px] font-bold">頁面二</span>
-            </button>
-        </div>
+    <nav class="fixed bottom-0 left-0 w-full bg-white/90 backdrop-blur-lg border-t border-gray-100 z-50 h-20 flex justify-around items-center">
+        <button id="nav-1" onclick="switchPage(1, '認識神婆')" class="nav-btn flex flex-col items-center flex-1 text-blue-600 transition-all">🌟<span class="text-[10px] font-bold">認識</span></button>
+        <button id="nav-2" onclick="switchPage(2, '打小人流程')" class="nav-btn flex flex-col items-center flex-1 text-gray-400 disabled-nav transition-all">🔨<span class="text-[10px] font-bold">流程</span></button>
+        <button id="nav-3" onclick="switchPage(3, '紀錄')" class="nav-btn flex flex-col items-center flex-1 text-gray-400 disabled-nav transition-all">📓<span class="text-[10px] font-bold">紀錄</span></button>
+        <button id="nav-4" onclick="switchPage(4, '通知')" class="nav-btn flex flex-col items-center flex-1 text-gray-400 disabled-nav transition-all">🔔<span class="text-[10px] font-bold">通知</span></button>
+        <button id="nav-5" onclick="switchPage(5, '我的')" class="nav-btn flex flex-col items-center flex-1 text-gray-400 disabled-nav transition-all">👤<span class="text-[10px] font-bold">我的</span></button>
     </nav>
 
     <div id="modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-md">
         <div id="modal-content" class="bg-white w-full max-w-2xl rounded-[40px] max-h-[85vh] overflow-hidden flex flex-col transition-all duration-300 transform translate-y-10 opacity-0 relative shadow-2xl">
-            <button onclick="closeModal()" class="absolute top-6 right-8 text-gray-300 hover:text-gray-600 text-3xl z-10">&times;</button>
-            
-            <div id="modal-body" class="p-8 md:p-12 overflow-y-auto no-scrollbar">
-                </div>
+            <button onclick="closeModal()" class="absolute top-6 right-8 text-gray-300 hover:text-gray-600 text-3xl z-10 transition-colors">&times;</button>
+            <div id="modal-body" class="p-8 md:p-12 overflow-y-auto no-scrollbar"></div>
         </div>
     </div>
 
     <script>
-        const characterData = {
+        let shamanReadStatus = { wang: false, li: false };
+        let toolsCollected = new Set();
+        let hitCount = 0;
+        let audioPlayer = new Audio('speak1.mp3');
+
+        const shamanData = {
             wang: {
-                name: "王婆婆",
-                tag: "傳統神婆",
-                tagClass: "text-amber-600",
+                name: "王婆婆", tag: "傳統神婆", tagClass: "text-amber-600",
                 qa: [
                     { q: "為甚麼選擇成為神婆？", a: "年輕時家裏窮，跟着長輩學的。後來發現，很多人來找我，其實只是想找個人説説心裏話。" },
                     { q: "您覺得打小人真的有用嗎？", a: "有用、沒用，信的人就有用。但更重要的是，打完之後，心裏的氣消了，能重新面對生活。" },
@@ -101,9 +181,7 @@
                 ]
             },
             li: {
-                name: "李阿姨",
-                tag: "新派神婆",
-                tagClass: "text-blue-500",
+                name: "李阿姨", tag: "新派神婆", tagClass: "text-blue-500",
                 qa: [
                     { q: "您是如何將傳統與現代結合的？", a: "我學過心理學，發現很多傳統儀式其實有心理療癒的作用。打小人就像情緒宣洩，祈禱就像正念瞑想。" },
                     { q: "您認為傳統文化還需要保留嗎？", a: "當然需要。傳統文化是我們的根，但我們要用現代的方式去理解和運用它，讓它真正幫助到現代人。" },
@@ -112,43 +190,37 @@
             }
         };
 
-        function triggerCardAnimation() {
-            const cards = document.querySelectorAll('.card-enter');
-            cards.forEach((card, i) => {
-                card.classList.remove('show');
-                setTimeout(() => card.classList.add('show'), i * 150);
+        function switchPage(idx, title) {
+            document.getElementById('app-header').innerText = title;
+            document.querySelectorAll('.page').forEach((p, i) => p.classList.toggle('hidden', i + 1 !== idx));
+            document.querySelectorAll('.nav-btn').forEach((btn, i) => {
+                btn.classList.toggle('text-blue-600', i + 1 === idx);
+                btn.classList.toggle('text-gray-400', i + 1 !== idx);
             });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        document.addEventListener("DOMContentLoaded", triggerCardAnimation);
+        function readShaman(key) {
+            shamanReadStatus[key] = true;
+            document.getElementById(`card-${key}`).classList.add('card-completed');
+            const status = document.getElementById(`status-${key}`);
+            status.innerText = "✓ 已了解";
+            status.classList.replace('text-gray-300', 'text-green-500');
 
-        function showModal(key) {
-            const data = characterData[key];
+            const data = shamanData[key];
+            let qaHtml = `<div class="mb-8 text-center md:text-left"><p class="text-xs font-black ${data.tagClass} uppercase tracking-[0.2em] mb-1">${data.tag}</p><h2 class="text-3xl font-black text-gray-900">${data.name} 訪談錄</h2></div><div class="space-y-6">${data.qa.map(item => `<div class="bg-gray-50 p-6 rounded-[24px] border border-gray-100"><p class="text-blue-600 font-bold mb-2">Q：${item.q}</p><p class="text-gray-600 leading-relaxed font-medium">A：${item.a}</p></div>`).join('')}</div><button onclick="closeModal()" class="w-full mt-10 bg-gray-900 text-white py-4 rounded-2xl font-bold">了解完畢</button>`;
+            document.getElementById('modal-body').innerHTML = qaHtml;
             const modal = document.getElementById('modal');
             const content = document.getElementById('modal-content');
-            
-            let qaHtml = `
-                <div class="mb-8">
-                    <p class="text-xs font-black ${data.tagClass} uppercase tracking-[0.2em] mb-1">${data.tag}</p>
-                    <h2 class="text-3xl font-black text-gray-900">${data.name} 訪談錄</h2>
-                </div>
-                <div class="space-y-6">
-            `;
-
-            data.qa.forEach(item => {
-                qaHtml += `
-                    <div class="bg-gray-50 p-6 rounded-[24px] border border-gray-100">
-                        <p class="text-blue-600 font-bold mb-2">Q：${item.q}</p>
-                        <p class="text-gray-600 leading-relaxed font-medium">A：${item.a}</p>
-                    </div>
-                `;
-            });
-
-            qaHtml += `</div>`;
-            document.getElementById('modal-body').innerHTML = qaHtml;
-            
             modal.classList.remove('hidden');
             setTimeout(() => content.classList.remove('translate-y-10', 'opacity-0'), 10);
+
+            if (shamanReadStatus.wang && shamanReadStatus.li) {
+                document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('disabled-nav'));
+                const msg = document.getElementById('unlock-msg');
+                msg.innerText = "✓ 所有神婆已了解，內容已開放。";
+                msg.className = "mt-10 text-center text-green-500 font-bold animate-pulse";
+            }
         }
 
         function closeModal() {
@@ -158,15 +230,99 @@
             setTimeout(() => modal.classList.add('hidden'), 300);
         }
 
-        function switchPage(idx, title) {
-            document.getElementById('app-header').innerText = title;
-            document.querySelectorAll('.page').forEach((p, i) => p.classList.toggle('hidden', i + 1 !== idx));
-            document.querySelectorAll('.nav-btn').forEach((btn, i) => {
-                btn.classList.toggle('text-blue-600', i + 1 === idx);
-                btn.classList.toggle('text-gray-400', i + 1 !== idx);
-            });
-            if(idx === 1) triggerCardAnimation();
+        function hideNameAlert() {
+            document.getElementById('name-alert').classList.add('hidden');
         }
+
+        function checkNameAndNext() {
+            const val = document.getElementById('name-input').value.trim();
+            if (val === "") {
+                document.getElementById('name-alert').classList.remove('hidden');
+            } else {
+                unlockStep(3);
+            }
+        }
+
+        function pickTool(btn, id) {
+            if (toolsCollected.has(id)) return;
+            toolsCollected.add(id);
+            btn.querySelector('.check-mark').classList.remove('hidden');
+            btn.classList.add('bg-blue-50', 'border-blue-200');
+            document.getElementById('tool-count').innerText = toolsCollected.size;
+            if (toolsCollected.size === 5) {
+                document.getElementById('all-tools-ready').classList.remove('hidden');
+                const nextBtn = document.getElementById('next-step-btn');
+                nextBtn.disabled = false;
+                nextBtn.className = "flex-1 py-4 bg-blue-600 text-white rounded-2xl font-bold shadow-lg shadow-blue-200 transition-all";
+                document.getElementById('step-btn-2').classList.remove('disabled-nav', 'bg-gray-200', 'text-gray-400');
+                document.getElementById('step-btn-2').classList.add('bg-blue-100', 'text-blue-600');
+            }
+        }
+
+        function switchStep(step) {
+            document.querySelectorAll('.step-content').forEach(c => c.classList.add('hidden'));
+            document.getElementById(`step-content-${step}`).classList.remove('hidden');
+            for (let i = 1; i <= 5; i++) {
+                const btn = document.getElementById(`step-btn-${i}`);
+                if (i === step) btn.className = "w-10 h-10 rounded-full bg-blue-600 text-white font-bold transition-all text-sm";
+                else if (!btn.classList.contains('disabled-nav')) btn.className = "w-10 h-10 rounded-full bg-blue-100 text-blue-600 font-bold transition-all text-sm";
+            }
+            if (step === 3) startChant();
+            if (step === 5) startFinalBlessing();
+        }
+
+        function unlockStep(nextStep) {
+            const btn = document.getElementById(`step-btn-${nextStep}`);
+            btn.classList.remove('disabled-nav', 'bg-gray-200', 'text-gray-400');
+            btn.classList.add('bg-blue-100', 'text-blue-600');
+            switchStep(nextStep);
+        }
+
+        function startChant() {
+            audioPlayer.play();
+            setTimeout(() => document.getElementById('skip-audio-btn').classList.remove('hidden'), 5000);
+            audioPlayer.onended = stopChant;
+        }
+
+        function stopChant() {
+            audioPlayer.pause();
+            document.getElementById('chant-status').innerText = "咒語念誦完成";
+            const btn = document.getElementById('finish-chant-btn');
+            btn.disabled = false;
+            btn.innerText = "咒語念誦完成！";
+            btn.className = "w-full py-4 bg-blue-600 text-white rounded-2xl font-bold";
+        }
+
+        function hitWood() {
+            hitCount++;
+            document.getElementById('hit-count').innerText = hitCount;
+            const target = document.getElementById('wood-target');
+            target.style.transform = "scale(1.3)";
+            setTimeout(() => target.style.transform = "scale(1)", 100);
+            const dots = document.querySelectorAll('.hit-dot');
+            if (hitCount <= 10) {
+                dots[hitCount - 1].classList.replace('bg-gray-200', 'bg-red-500');
+                dots[hitCount - 1].style.transform = "scale(1.5)";
+            }
+            if (hitCount >= 10) {
+                const nextBtn = document.getElementById('next-btn-4');
+                nextBtn.disabled = false;
+                nextBtn.className = "flex-1 py-4 bg-blue-600 text-white rounded-2xl font-bold";
+            }
+        }
+
+        function startFinalBlessing() {
+            setTimeout(() => {
+                const btn = document.getElementById('final-bless-btn');
+                btn.disabled = false;
+                btn.innerText = "儀式完成！";
+                btn.className = "w-full py-5 bg-green-600 text-white rounded-[24px] font-bold shadow-lg shadow-green-100";
+            }, 3000);
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            document.querySelectorAll('.card-enter').forEach((c, i) => setTimeout(() => c.classList.add('show'), i * 150));
+        });
     </script>
 </body>
 </html>
