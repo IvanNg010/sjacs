@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>神婆手記</title>
+    <title>橋下的人：神婆手記</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         :root {
@@ -227,6 +227,12 @@
         ::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); border-radius: 10px; }
         ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.4); }
+
+        /* 聖杯一正一反 SVG 狀態顯示切換樣式 */
+        #jiao-1 .flat-svg, #jiao-2 .flat-svg { display: none; }
+        #jiao-1 .convex-svg, #jiao-2 .convex-svg { display: none; }
+        #jiao-1.show-convex .convex-svg, #jiao-2.show-convex .convex-svg { display: block; }
+        #jiao-1.show-flat .flat-svg, #jiao-2.show-flat .flat-svg { display: block; }
 
     </style>
 </head>
@@ -478,9 +484,9 @@
                             </div>
                             
                             <div class="relative inline-block mb-16 mt-8">
-                                <button id="wood-target" onclick="hitWood()" class="relative text-[180px] md:text-[250px] active:scale-90 transition-transform block select-none hover:scale-105 filter drop-shadow-2xl">
-                                    🪵
-                                    <span id="shoe-effector" class="absolute -top-16 -right-16 md:-top-24 md:-right-24 text-[8rem] md:text-[12rem] opacity-100 pointer-events-none filter drop-shadow-[-10px_20px_10px_rgba(0,0,0,0.6)]">👞</span>
+                                <button id="wood-target" onclick="hitWood()" class="relative active:scale-90 transition-transform block select-none hover:scale-105 filter drop-shadow-2xl focus:outline-none">
+                                    <img src="https://i.imgur.com/Q2463xo.jpeg" class="w-[180px] h-[180px] md:w-[250px] md:h-[250px] object-contain mx-auto pointer-events-none rounded-3xl" alt="五鬼符">
+                                    <img id="shoe-effector" src="https://i.imgur.com/Axnz46Y.png" class="absolute -top-16 -right-16 md:-top-24 md:-right-24 w-[8rem] h-[8rem] md:w-[12rem] md:h-[12rem] opacity-100 pointer-events-none filter drop-shadow-[-10px_20px_10px_rgba(0,0,0,0.6)]" alt="鞋子">
                                 </button>
                                 <div id="hit-effect" class="absolute inset-0 pointer-events-none flex items-center justify-center opacity-0 z-50">
                                     <span class="text-white font-black text-7xl md:text-9xl italic text-transparent bg-clip-text bg-gradient-to-br from-yellow-300 to-red-600 drop-shadow-[0_0_30px_rgba(255,0,0,1)] -rotate-12 scale-150">BAM!</span>
@@ -503,9 +509,59 @@
                                 <p class="text-amber-500 text-sm md:text-base mt-2 font-black tracking-wider">首擲免費，重擲50金幣/次</p>
                             </div>
                             
-                            <div id="moon-blocks" class="flex justify-center gap-10 mb-12 h-40 md:h-48" style="perspective: 1200px;">
-                                <div id="jiao-1" class="w-20 h-40 md:w-24 md:h-48 bg-gradient-to-b from-red-600 to-red-900 rounded-full shadow-[inset_-8px_-8px_20px_rgba(0,0,0,0.6),10px_15px_15px_rgba(0,0,0,0.4)] border border-red-950 transition-all duration-500 transform"></div>
-                                <div id="jiao-2" class="w-20 h-40 md:w-24 md:h-48 bg-gradient-to-b from-red-600 to-red-900 rounded-full shadow-[inset_-8px_-8px_20px_rgba(0,0,0,0.6),10px_15px_15px_rgba(0,0,0,0.4)] border border-red-950 transition-all duration-500 transform"></div>
+                            <div id="moon-blocks" class="flex justify-center gap-12 mb-12 h-40 md:h-48 items-center" style="perspective: 1200px;">
+                                <div id="jiao-1" class="w-32 h-32 filter drop-shadow-[8px_15px_10px_rgba(0,0,0,0.6)] transition-all duration-500 transform show-convex">
+                                    <svg viewBox="0 0 120 120" class="convex-svg w-full h-full">
+                                        <defs>
+                                            <radialGradient id="jiao-real-convex-1" cx="50%" cy="35%" r="60%">
+                                                <stop offset="0%" stop-color="#ff6b6b"/>
+                                                <stop offset="45%" stop-color="#dc2626"/>
+                                                <stop offset="85%" stop-color="#7f1d1d"/>
+                                                <stop offset="100%" stop-color="#450a0a"/>
+                                            </radialGradient>
+                                        </defs>
+                                        <path d="M 15,60 Q 60,10 105,60 Q 60,42 15,60 Z" fill="url(#jiao-real-convex-1)" />
+                                        <path d="M 15,60 Q 60,22 105,60" fill="none" stroke="#fca5a5" stroke-width="1.5" opacity="0.4" filter="blur(1px)" />
+                                    </svg>
+                                    <svg viewBox="0 0 120 120" class="flat-svg w-full h-full">
+                                        <defs>
+                                            <linearGradient id="jiao-real-flat-1" x1="0" y1="0" x2="0" y2="1">
+                                                <stop offset="0%" stop-color="#fca5a5"/>
+                                                <stop offset="100%" stop-color="#b91c1c"/>
+                                            </linearGradient>
+                                        </defs>
+                                        <path d="M 15,64 Q 60,14 105,64 Q 60,46 15,64 Z" fill="#450a0a" />
+                                        <path d="M 15,60 Q 60,10 105,60 Q 60,42 15,60 Z" fill="url(#jiao-real-flat-1)" stroke="#7f1d1d" stroke-width="1.5" />
+                                        <path d="M 28,56 Q 60,20 92,56" fill="none" stroke="#991b1b" stroke-width="1" opacity="0.4" />
+                                        <path d="M 40,54 Q 60,28 80,54" fill="none" stroke="#7f1d1d" stroke-width="1" opacity="0.3" />
+                                    </svg>
+                                </div>
+                                <div id="jiao-2" class="w-32 h-32 filter drop-shadow-[8px_15px_10px_rgba(0,0,0,0.6)] transition-all duration-500 transform show-convex">
+                                    <svg viewBox="0 0 120 120" class="convex-svg w-full h-full">
+                                        <defs>
+                                            <radialGradient id="jiao-real-convex-2" cx="50%" cy="35%" r="60%">
+                                                <stop offset="0%" stop-color="#ff6b6b"/>
+                                                <stop offset="45%" stop-color="#dc2626"/>
+                                                <stop offset="85%" stop-color="#7f1d1d"/>
+                                                <stop offset="100%" stop-color="#450a0a"/>
+                                            </radialGradient>
+                                        </defs>
+                                        <path d="M 15,60 Q 60,10 105,60 Q 60,42 15,60 Z" fill="url(#jiao-real-convex-2)" />
+                                        <path d="M 15,60 Q 60,22 105,60" fill="none" stroke="#fca5a5" stroke-width="1.5" opacity="0.4" filter="blur(1px)" />
+                                    </svg>
+                                    <svg viewBox="0 0 120 120" class="flat-svg w-full h-full">
+                                        <defs>
+                                            <linearGradient id="jiao-real-flat-2" x1="0" y1="0" x2="0" y2="1">
+                                                <stop offset="0%" stop-color="#fca5a5"/>
+                                                <stop offset="100%" stop-color="#b91c1c"/>
+                                            </linearGradient>
+                                        </defs>
+                                        <path d="M 15,64 Q 60,14 105,64 Q 60,46 15,64 Z" fill="#450a0a" />
+                                        <path d="M 15,60 Q 60,10 105,60 Q 60,42 15,60 Z" fill="url(#jiao-real-flat-2)" stroke="#7f1d1d" stroke-width="1.5" />
+                                        <path d="M 28,56 Q 60,20 92,56" fill="none" stroke="#991b1b" stroke-width="1" opacity="0.4" />
+                                        <path d="M 40,54 Q 60,28 80,54" fill="none" stroke="#7f1d1d" stroke-width="1" opacity="0.3" />
+                                    </svg>
+                                </div>
                             </div>
 
                             <div class="bg-slate-950/50 min-h-[5rem] flex items-center justify-center rounded-2xl mb-8 border border-white/5">
@@ -654,7 +710,7 @@
                         <p class="flex justify-center gap-4">鵝頸橋梁婆婆及麥仙姑接受訪問</p>
                         <br>
                         <p class="flex justify-center gap-4"><span class="text-amber-500">參與老師名單：</span></p>
-                        <p class="flex justify-center gap-4">李天民主任<br>余藹盈副校長</p>
+                        <p class="flex justify-center gap-4">余藹盈副校長<br>李天民主任</p>
                         <br>
                         <p class="flex justify-center gap-4"><span class="text-amber-500">參與同學名單：</span></p>
                         <p class="flex justify-center gap-4">組長：<br>黎灝<br><br>資料搜集・整理・拍攝：<br>葉正楠<br>譚國健<br><br>電腦設計：<br>張言名<br>吳文泰</p>
@@ -702,10 +758,10 @@
                         <div class="bg-slate-900/70 p-10 rounded-[32px] border border-white/10 shadow-inner hover:border-blue-500/30 transition-colors">
                             <h4 class="text-blue-400 font-black text-xl md:text-2xl mb-6 bg-blue-900/30 inline-block px-4 py-2 rounded-xl">組員譚國健</h4>
                             <div class="min-h-[150px] bg-black/30 border-2 border-dashed border-white/10 rounded-2xl p-6 text-gray-500 text-base flex items-center justify-center text-left">
-                                經過這次考察發現原來打小人檔也有電子支付，「嘟」一聲便完成交易，方便確實方便，但我心底總覺得欠缺了什麼。梁婆婆那一檔，攤前冷清，沒有人排隊，連支付方式也是傳統的現金支付。看著那默默打著小人的身影，方才找到心中欠缺了的那部份。
+                                經過這次考察發現原來打小人檔也有電子支付，「嘟」一聲便完成交易，方便確實方便，但我心底總覺得欠缺了什麼。梁婆婆那一檔，摊前冷清，沒有人排隊，連支付方式也是傳統的現金支付。看著那默默打著小人的身影，方才找到心中欠缺了的那部份。
 梁婆婆的那些熟客幾十年來都回去找梁婆婆，不是因為她收費便宜或位置便利，而是因為她真的懂得怎麽打，咒語怎樣講，背後統統都有學問，那是用了幾十年光陰鑽研出來的功夫，不是隨意拍幾下就了事。我並非說其他攤位不專業，只不過這種經時間沉澱的手藝是其他攤位所體驗不到的。
 
-我想帶出的是打小人跟進潮流使用電子支付本身沒有錯，時代終歸要往前走的。但當所有事情都講求方便與跟隨社會風氣，到底還會剩下多少人記得最原始、最傳統的打小人風俗？去傳承、保留那些真正技術?也許打小人從來都沒有改變，改變的可能是我們，我們追求快捷簡單，電子支付就是其中一個例子，同時愈來愈不懂得珍惜。那些傳統又繁複的手藝逐漸消失，離不開我們要速成又嫌麻煩而不去傳承的觀念。不妨我們可以嘗試接觸一下打小人這種末藝，而並非放任它默默消逝在時代的沖刷之下。
+我想帶出的是打小人跟進潮流使用電子支付身沒有錯，時代終歸要往前走的。但當所有事情都講求方便與跟隨社會風氣，到底還會剩下多少人記得最原始、最傳統的打小人風俗？去傳承、保留那些真正技術?也許打小人從來都沒有改變，改變的可能是我們，我們追求快捷簡單，電子支付就是其中一個例子，同時愈來愈不懂得珍惜。那些傳統又繁複的手藝逐漸消失，離不開我們要速成又嫌麻煩而不去傳承的觀念。不妨我們可以嘗試接觸一下打小人這種末藝，而並非放任它默默消逝在時代的沖刷之下。
 
 在驚蟄裏，我們可看到藏著古人對自然的敬畏，也藏著中國人刻在骨子裏的祈福情懷，歷經歲月沉澱，依舊鮮活如初。打小人或可讓人宣洩不滿、緩解情緒。也許數十年後我們的子子孫孫早已忘記了這個事物存在，因此，我們更加要去這個把這個傳統文化傳承下去。
 
@@ -731,7 +787,7 @@
             <span id="gold-alert-emoji" class="text-7xl md:text-8xl block mb-8 filter drop-shadow-lg">⚠️</span>
             <h3 id="gold-alert-title" class="text-3xl md:text-4xl font-black text-white mb-10 drop-shadow-md">金幣不足！</h3>
             <div id="ad-option-container" class="space-y-5">
-                <button onclick="watchAdForGold()" id="ad-btn" class="w-full py-6 bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-white rounded-3xl font-black text-lg md:text-xl game-btn-3d shadow-lg">📺 看看我們的訪問影片 (+50金幣)</button>
+                <button onclick="watchAdForGold()" id="ad-btn" class="w-full py-6 bg-gradient-to-r from-amber-600 to-amber-50 hover:from-amber-500 hover:to-amber-400 text-white rounded-3xl font-black text-lg md:text-xl game-btn-3d shadow-lg">📺 看看我們的訪問影片 (+50金幣)</button>
                 <button onclick="closeGoldAlert()" class="w-full py-6 bg-slate-800 hover:bg-slate-700 text-gray-300 rounded-3xl font-black text-lg md:text-xl game-btn-3d border border-white/10">稍後再說</button>
             </div>
         </div>
@@ -771,27 +827,29 @@
                 name: "梁婆婆", title: "鵝頸橋年資最長大師姐",
                 bio: "1983年從大陸到港，原本打自家工。現年90多歲，在鵝頸橋打小人已20多年。",
                 qa: [
-                    { q: "從業經驗？", a: "打了20多年，現在90多歲。" },
-                    { q: "打小人的完整程序為何？", a: "程序相當傳統，依次為：<br>1. 叫顧客在簿上寫下名字及打小人目標<br>2. 點香<br>3. 拜神、求神<br>4. 開始打小人<br>5. 再次求神，燒小人紙<br>6. 叫顧客伸出雙手<br>7. 燒簿<br>8. 擲靈筊，一定要擲出「聖筊」，如沒有則再擲。" },
-                    { q: "打小人與「五鬼」有何關係？", a: "打五鬼非常重要，用意是趕走小人，並非報復或打人，而是驅逐。" },
-                    { q: "跟誰學打小人？", a: "自學，沒有跟師傅。1983年從大陸到港，以前是打自家工。" },
-                    { q: "收徒弟嗎？", a: "不收徒弟。" },
-                    { q: "收利是時有何特別？", a: "收利是的過程非常隆重。" },
-                    { q: "有熟客嗎？", a: "有，訪問期間便有熟客出現，已幫襯10多年，主要做熟客生意。" },
-                    { q: "接受電子支付嗎？", a: "不接受。只收現金，不收支付寶、微信支付、PayMe。" },
-                    { q: "她認為其他打小人師傅有何問題？", a: "認為其他人不正宗。不正宗的打小人帶有報復性質，事後可能給符、要求客人跟身一年，而且會收徒弟。" },
-                    { q: "正宗與不正宗在收費上有何分別？", a: "﻿﻿正宗：標準收費50港元，明碼實價，套餐已包全套儀式。<br>不正宗：口頭報價50元，但如犯太歲、運勢極差的狀況會額外收費。價錢超過標準收費。" },
-                    { q: "正宗打小人的核心精神是甚麼？", a: "只是趕走小人，而非報復。" }
+                    { q: "梁婆婆您好！請問除了您這裡，香港還有哪些地方可以「打小人」？", a: "其他地方也有，但很多都簡化了程序。我不評論別人，只知道自己跟足傳統。" },
+                    { q: "您做這行多久了？是否有師父傳授？", a: "我做了接近四五十年，今年已經九十歲。我是跟正統師父學的，不是自己亂來。" },
+                    { q: "請問這行有什麼特別的禁忌嗎？", a: "有。孕婦一定不能打小人，還有許多細節，不可馬虎。" },
+                    { q: "您平日生意如何？怕不怕別人搶生意？", a: "生意不算好，通常只有熟客光顧。我不怕別人搶生意，但現在很多人偷工減料，簡化程序，根本不是正宗做法。就算打完，也不會有什麼變化。" },
+                    { q: "您只替人「提小人」，而不「打小人」嗎？", a: "對。我理解的「打小人」意思是替人提點小人，而不是真的用鞋打。我只會提小人，不會打。" },
+                    { q: "您如何與客人溝通？外國遊客來找您怎麼辦？", a: "我不懂英文，只會說中文。外國客人很少，多數是本地熟客，他們聽得懂我就行。" },
+                    { q: "您會不會擔心這門手藝失傳？", a: "不擔心。我不收徒弟，因為現在的人不肯跟足傳統，隨便學兩下就出去開檔，我寧願不教。" },
+                    { q: "您這裡有電子支付嗎？收微信支付或PayMe嗎？", a: "我只收現金，不收電子支付。我不懂那些，也不需要。" },
+                    { q: "為什麼您供奉的神位和咒語比其他人更多、更長？", a: "因為我堅持正宗。現在很多人嫌麻煩，把程序簡化了，那不是真正的打小人。我每個步驟都不會省，這樣才有用。" },
+                    { q: "您擔心新一代不接受傳統做法嗎？", a: "﻿﻿不擔心。傳統有傳統的道理，跟足才有效。如果只求快、求方便，不如不要做。" }
                 ]
             },
             li: {
                 name: "麥仙姑", title: "新派打小人神婆",
                 bio: "將古老傳統與現代結合。",
                 qa: [
-                    { q: "從業經驗？", a: "打了十餘年。" },
-                    { q: "打小人有何禁忌？", a: "孕婦不能打小人。" },
-                    { q: "接受電子支付嗎？", a: "收現金、支付寶、微信支付、PayMe。" },
-                    { q: "儀式有具體效果嗎？", a: "很多客人打完後覺得心情舒暢，這種心理暗示的療癒效果在現代高壓社會非常重要。" }
+                    { q: "仙姑你好！我們想先了解一下，除了這裡，香港還有哪些地方可以「打小人」？", a: "除了我這裡，油麻地、深水埗也有同行。" },
+                    { q: "你做這行多久了？是不是有師父傳授的？", a: "我做了大概三四十年了，當年我有神靈托夢庇佑！另外，打小人不是那麼簡單的，也要記咒語、學手勢。" },
+                    { q: "那麼做這行有沒有什麼特別的禁忌？", a: "當然有，孕婦不能打小人。" },
+                    { q: "說到生計，聽說驚蟄那幾天的收入很可觀，是真的嗎？", a: "驚蟄那三天真的是忙得沒停手，雖然會有人來做「兼職」，但我不怕，老客人都是認我麥仙姑這份誠心的。" },
+                    { q: "如果遇到外國遊客，你怎麼溝通呢？他們聽得懂口訣嗎？", a: "我英文只會簡單的交流，但他們有翻譯助手，再加上我會用肢體語言，笑臉迎人，他們就明白了。至於口訣，我照樣講中文，天神是通靈的，不用擔心聽不懂英文。" },
+                    { q: "那你會不會擔心這門手藝失傳？", a: "不會，那邊的一檔口就是我侄女，我完全不介意，大家各自做各自的，怕什麼她搶生意。不過，我認為這門手藝真的不能老古板，也要跟上潮流。" },
+                    { q: "仙姑，我發現你這裡有QR Code，是電子支付收款碼嗎？", a: "是啊！我也要跟上潮流嘛！我現在收 PayMe、轉數快、微信支付，方便年輕人和內地同胞。我還有 WhatsApp 幫熟客預約時間呢！" }
                 ]
             }
         };
@@ -844,6 +902,22 @@
         }
 
         function showToolDetail(name, imgUrl) {
+            // 定義每件道具的專屬客製化詳細文字介紹
+            const toolDescriptions = {
+                "小木人": "代表委託人需要驅逐的特定對象或潛在的冤親債主。儀式中通常會由委託人在其上寫下對方的姓名或生辰八字，使其成為承受後續鞋底擊打的具體物件。",
+                "鞋子": "打小人儀式中最重要的核心工具，用作揮打小人紙。傳統上，神婆會使用平底鞋、打手或具備粗糙質感的舊鞋底，透過持續痛擊的拍打聲與動作來宣洩心中鬱結、消除霉運。",
+                "紙老虎": "即傳統民俗中的「白虎」。驚蟄期間相傳白虎會驚醒傷人，因此神婆在打完小人後，會使用一塊肥豬肉塗抹紙老虎的嘴巴將其「封口」，寓意塞住牠的利齒，使其無法張口中傷他人、搬弄是非。",
+                "招財進寶符": "用於儀式尾聲、化寶火化階段的吉利符咒。其主要功能是在痛快驅逐小人與生活霉運之後，為委託人重新引福納財、增添福氣，達到「驅邪後迎祥」的民俗效果。",
+                "五鬼符": "代表危害委託人四方、身邊或工作上的陰邪煞氣與背後是非。在儀式中，用力擊打五鬼紙是為了將危害運勢的各路惡煞徹底驅離，幫助委託人化煞消災、尋求靈魂與精神上的寬慰。",
+                "香燭": "供奉神明必不可少的靈媒。在臨時神壇前（神龕多供奉觀音、關公、土地等神像）點燃香燭，用以對諸神傳遞誠心敬意，祈求神靈降臨庇佑法事順利，並照亮驅邪化煞的前路。",
+                "家宅平安符": "特別加購的法器。主要作用在於增強住宅的正面磁場、化解家中角落的潛在煞氣，護佑闔家男女老少出入逢凶化吉、身體健康，使居住環境更加和樂融融。",
+                "感情順利符": "特別加購的法器。專為祈求良緣、穩固人際關係與化解感情衝突而製。能有效擋去爛桃花、淡化情侶或夫妻間的口舌爭執，讓雙方的相處少些摩擦，多些和諧與心靈契合。",
+                "事業成功符": "特別加購的法器。專注於提升委託人的職涯與商業運勢。用以開拓人脈、招來貴人相助，並在無形中化解職場上的同事排擠或小人冷箭，助事業步步高升、前程似錦。"
+            };
+
+            // 若找不到客製化名稱，則使用預設格式作為防呆
+            const desc = toolDescriptions[name] || `此處為「${name}」的詳細介紹內容。傳統上，這件道具在打小人儀式中扮演著關鍵的角色，用以強化儀式的效力或象徵特定的文化意義。`;
+
             document.getElementById('modal-body').innerHTML = `
                 <div class="mb-10 text-center">
                     <span class="px-5 py-2 bg-blue-500/20 text-blue-400 text-sm font-black rounded-full uppercase border border-blue-500/30">道具詳情</span>
@@ -853,25 +927,9 @@
                     <img src="${imgUrl}" class="w-full h-full object-cover">
                 </div>
                 <div class="qa-mask mx-auto max-w-2xl bg-black/40 border-l-4 border-blue-500">
-                    <p class="text-gray-300 text-base md:text-lg leading-relaxed font-medium">此處為「${name}」的詳細介紹內容。傳統上，這件道具在打小人儀式中扮演著關鍵的角色，用以強化儀式的效力或象徵特定的文化意義。</p>
+                    <p class="text-gray-300 text-base md:text-lg leading-relaxed font-medium">${desc}</p>
                 </div>
                 <button onclick="closeModal()" class="w-full max-w-lg mx-auto block mt-12 py-6 bg-slate-800 hover:bg-slate-700 text-white rounded-3xl font-black text-xl game-btn-3d border border-white/10">關閉</button>
-            `;
-            openModal();
-        }
-
-        function openHistoryResearch() {
-            document.getElementById('modal-body').innerHTML = `
-                <div class="mb-12 text-center">
-                    <span class="px-5 py-2 bg-amber-500/20 text-amber-500 text-sm font-black rounded-full uppercase border border-amber-500/30">學術研究庫</span>
-                    <h2 class="text-4xl md:text-5xl font-black text-white mt-6 italic drop-shadow-md">打小人職業在香港的歷史研究</h2>
-                </div>
-                <div class="qa-mask bg-black/50 border-l-4 border-amber-500 mx-auto max-w-3xl">
-                    <div class="text-gray-300 text-base md:text-lg leading-loose space-y-6 font-medium">
-                        <p>「打小人」是香港一項歷史悠久的民間習俗，近年更被列入本港首份「非物質文化遺產」清單，成為獨特的城市符號。這項習俗的淵源可以追溯至唐代的「厭詛」巫術，核心目的是讓人宣洩負面情緒。現代形式的「打小人」隨著清代及戰後移民傳入香港，並在二十世紀八十至九十年代，因灣仔舊區重建，促使相關檔販聚集到鵝頸橋下，逐漸形成今天的「聖地」。每年驚蟄（三月五日或六日）是打小人活動的高潮；古人相信春雷會驚醒害蟲，後來演變出祭白虎和打小人的儀式，前者用肥豬肉塞住紙老虎的嘴，以防牠傷人，後者則避免小人「開口傷人」。<br><br>整個儀式有固定流程，以下便是根據我們在鵝頸橋實地觀察，整理出來的詳細步驟：<br>· 擺壇奉神：在橋底擺放臨時神壇，供奉觀音、土地等神明，點起香燭，祈求神靈庇佑。<br><· 提供資料：委託人將自己的姓名、生辰八字或住址寫在「小人紙」上，亦可只告訴神婆「小人」的特徵（如屬相、姓氏）。<br>· 以鞋擊打：神婆將小人紙放在一塊磚頭或木板上，用舊式平底鞋的鞋底，用力連續擊打小人紙，同時唸出口訣（例如「打你個小人頭，打到你有氣冇訂唞」）。<br>· 祭白虎：在打小人之後，用一小塊肥豬肉塗抹紙製白虎的嘴巴，寓意將白虎的利齒封住，防止牠開口傷人。<br>· 撒豆化煞：將白豆、紅豆或米粒撒向四周，象徵驅散是非與霉運，同時將小人紙、白虎紙等一併火化。<br>· 擲筊確認：部分神婆會用兩片筊杯擲地，若得到「聖筊」（一正一反），代表儀式完成；若否，則需重複打小人的部分。<br>· 完成付費：確認儀式完結後，委託人支付費用（傳統上以現金為主，現時部分檔口接受電子支付）。<br><br>然而，我們在實地研究中觀察到，「打小人」這門行業在香港的傳承正面對一個矛盾的處境。年過九十的梁婆婆堅持以最傳統的方式操作：不用新式符咒、只收現金、不收徒弟，服務對象也以熟客為主。她的堅守固然保留了習俗最純粹的面貌，但令人擔憂的是，一旦她退休，她的一套技藝恐怕無法傳承下去。另一方面，我們也發現其他神婆，例如麥仙姑，會主動引入微信支付和新式符咒；另有一些神婆雖然不像梁婆婆那樣極端傳統，卻也願意收徒弟或聘請助手，這些助手能夠說普通話甚至英語，幫忙招攬生意。結果，這些懂得適應環境的神婆，生意遠遠比梁婆婆更好。<br><br>要成為一位全職的「打小人」從業者，並非只靠口耳相傳便能勝任。綜合我們的觀察，這門行業需要具備以下條件：<br>· 師承或家族傳承：大部分神婆的技藝來自上一代或正式拜師，需要通過觀察和實踐學習完整的口訣、手勢以及祭品擺放方式。<br>· 熟悉傳統儀軌：必須準確掌握驚蟄、農曆每月特定日期（如初七、十四、廿三）等「打小人」的吉日，以及平日替客人「化煞」的不同方法。<br>· 靈活應變的能力：需要根據客人的需求（例如針對特定對象，或是純粹「打衰氣」）調整步驟，例如使用不同顏色的小人紙或額外的符咒。<br>· 掌握多種語言（現代條件）：為了應付不同背景的客人，不少神婆或其助手需要能夠說流利的粵語、普通話，甚至基礎英語，以招攬及溝通。<br>· 懂得運用新科技：部分從業者（如麥仙姑）會引入微信支付、WhatsApp預約，甚至製作新式印刷符咒，以方便年輕一代或遊客。<br>· 良好的體力與心理質素：打小人需要持續用力揮鞋，一天可能服務數十位客人；同時要能承受客人對「小人」的憤怒情緒，保持專業。<br>· 商業經營意識：除了懂儀式，也要懂得選址（如鵝頸橋下、定期租用攤位）、定價、管理助手，以及宣傳（例如口耳相傳或社交媒體）。<br><br>從以上的觀察可以見到，在現今香港社會，「打小人」要成功傳承，單靠堅守傳統並不足夠。雖然不少公眾認同打小人是香港獨特的文化特色，但從行業的實際狀況來看，能夠適應社會轉變、引入新元素和不同語言能力的人，才能在延續這門手藝的同時維持生計。梁婆婆的堅持固然可貴，值得我們尊敬，但麥仙姑和其他神婆的例子正好說明，靈活應變或許才是這門行業得以延續的關鍵。作為中學生，我們在進行這個歷史科專題時，深深體會到傳統文化要在現代社會生存，不能只靠懷緬過去，更需要開放態度，在保留核心精神的同時，尋找與時代接軌的方法。否則，像梁婆婆這樣的珍貴技藝，最終只會成為我們記憶中的一頁，而不再是在街頭真實上演的文化風景。</p>
-                    </div>
-                </div>
-                <button onclick="closeModal()" class="w-full max-w-lg mx-auto block mt-12 py-6 bg-slate-800 hover:bg-slate-700 text-white rounded-3xl font-black text-xl game-btn-3d border border-white/10">關閉面板</button>
             `;
             openModal();
         }
@@ -1215,10 +1273,6 @@
                 const rand = Math.random();
                 let isSheng = false;
                 
-                // 加大新茭杯樣式
-                const curvedClass = 'w-20 h-40 md:w-24 md:h-48 bg-gradient-to-b from-red-600 to-red-900 rounded-full shadow-[inset_-8px_-8px_20px_rgba(0,0,0,0.6),10px_15px_15px_rgba(0,0,0,0.4)] border border-red-950 transition-all duration-300 transform';
-                const flatClass = 'w-20 h-40 md:w-24 md:h-48 bg-gradient-to-b from-amber-100 to-amber-50 rounded-full shadow-[inset_3px_3px_8px_rgba(255,255,255,0.9),5px_10px_10px_rgba(0,0,0,0.2)] border border-amber-200 transition-all duration-300 transform';
-                
                 let state1, state2; 
 
                 if (rand < 0.5) {
@@ -1259,6 +1313,9 @@
                 }
             }, 800); 
         }
+
+        const curvedClass = 'w-32 h-32 filter drop-shadow-[8px_15px_10px_rgba(0,0,0,0.6)] transition-all duration-300 transform show-convex';
+        const flatClass = 'w-32 h-32 filter drop-shadow-[6px_12px_8px_rgba(0,0,0,0.5)] transition-all duration-300 transform show-flat';
 
         function showReflectionResult(type) {
             document.getElementById('reflection-start').classList.add('hidden');
