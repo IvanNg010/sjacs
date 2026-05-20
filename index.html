@@ -636,7 +636,7 @@
                             放過對方，也是放過自己。
                         </p>
                     </div>
-                    <button onclick="showPrayPath()" class="w-full max-w-2xl mx-auto py-8 bg-gradient-to-r from-indigo-700 to-purple-700 hover:from-indigo-600 hover:to-purple-600 text-white rounded-[32px] font-black text-2xl md:text-3xl game-btn-3d active-glow shadow-[0_10px_40px_rgba(79,70,229,0.6)]">放下執念，選擇寬恕 🕊️</button>
+                    <button onclick="showPrayPath()" class="w-full max-w-2xl mx-auto py-8 bg-gradient-to-r from-indigo-700 to-purple-700 hover:from-indigo-600 hover:to-purple-600 text-white rounded-[32px] font-black text-2xl md:text-3xl game-btn-3d active-glow shadow-[0_10px_40px_rgba(79,70,229,0.6)]">放下執念，選擇寬恕</button>
                 </div>
 
                 <div id="pray-path" class="hidden space-y-10">
@@ -775,10 +775,10 @@
 
     <nav class="fixed bottom-0 left-0 w-full bg-slate-950/90 backdrop-blur-3xl border-t border-white/10 h-24 md:h-28 flex justify-around items-center z-50 px-2 md:px-8 shadow-[0_-10px_30px_rgba(0,0,0,0.5)] pb-safe pt-2">
         <button id="nav-1" onclick="switchPage(1, '認識神婆')" class="flex flex-col items-center flex-1 text-blue-500 transition-all group pt-2"><span class="text-3xl md:text-4xl mb-1 group-hover:-translate-y-1 transition-transform">👵</span><span class="text-xs md:text-sm font-black uppercase tracking-wider">前導</span></button>
-        <button id="nav-2" onclick="switchPage(2, '進入流程')" class="flex flex-col items-center flex-1 text-gray-500 disabled-nav transition-all group pt-2"><span class="text-3xl md:text-4xl mb-1 group-hover:-translate-y-1 transition-transform">📜</span><span class="text-xs md:text-sm font-black uppercase tracking-wider">任務</span></button>
-        <button id="nav-3" onclick="switchPage(3, '心靈反思')" class="flex flex-col items-center flex-1 text-gray-500 disabled-nav transition-all group pt-2"><span class="text-3xl md:text-4xl mb-1 group-hover:-translate-y-1 transition-transform">✨</span><span class="text-xs md:text-sm font-black uppercase tracking-wider">反思</span></button>
-        <button id="nav-4" onclick="switchPage(4, '鳴謝')" class="flex flex-col items-center flex-1 text-gray-500 disabled-nav transition-all group pt-2"><span class="text-3xl md:text-4xl mb-1 group-hover:-translate-y-1 transition-transform">🎉</span><span class="text-xs md:text-sm font-black uppercase tracking-wider">鳴謝</span></button>
-        <button id="nav-5" onclick="switchPage(5, '組員調查')" class="flex flex-col items-center flex-1 text-gray-500 disabled-nav transition-all group pt-2"><span class="text-3xl md:text-4xl mb-1 group-hover:-translate-y-1 transition-transform">📊</span><span class="text-xs md:text-sm font-black uppercase tracking-wider">調查</span></button>
+        <button id="nav-2" onclick="switchPage(2, '進入流程')" class="flex flex-col items-center flex-1 text-blue-500 disabled-nav transition-all group pt-2"><span class="text-3xl md:text-4xl mb-1 group-hover:-translate-y-1 transition-transform">📜</span><span class="text-xs md:text-sm font-black uppercase tracking-wider">任務</span></button>
+        <button id="nav-3" onclick="switchPage(3, '心靈反思')" class="flex flex-col items-center flex-1 text-blue-500 disabled-nav transition-all group pt-2"><span class="text-3xl md:text-4xl mb-1 group-hover:-translate-y-1 transition-transform">✨</span><span class="text-xs md:text-sm font-black uppercase tracking-wider">反思</span></button>
+        <button id="nav-4" onclick="switchPage(4, '鳴謝')" class="flex flex-col items-center flex-1 text-blue-500 disabled-nav transition-all group pt-2"><span class="text-3xl md:text-4xl mb-1 group-hover:-translate-y-1 transition-transform">🎉</span><span class="text-xs md:text-sm font-black uppercase tracking-wider">鳴謝</span></button>
+        <button id="nav-5" onclick="switchPage(5, '組員調查')" class="flex flex-col items-center flex-1 text-blue-500 disabled-nav transition-all group pt-2"><span class="text-3xl md:text-4xl mb-1 group-hover:-translate-y-1 transition-transform">📊</span><span class="text-xs md:text-sm font-black uppercase tracking-wider">調查</span></button>
     </nav>
 
     <div id="modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6 bg-slate-950/90 backdrop-blur-xl">
@@ -1139,7 +1139,7 @@
                 document.getElementById('unlock-msg').innerHTML = "<span class='text-green-400 bg-green-900/30 px-6 py-2 rounded-full border border-green-500/30 block shadow-[0_0_15px_rgba(34,197,94,0.3)]'>準備就緒！</span>";
                 document.getElementById('unlock-msg').classList.remove('animate-pulse');
                 document.getElementById('next-page-container').classList.remove('hidden');
-                [2, 4, 5, 6].forEach(i => document.getElementById(`nav-${i}`).classList.remove('disabled-nav'));
+                [2].forEach(i => document.getElementById(`nav-${i}`).classList.remove('disabled-nav'));
             }
         }
 
@@ -1464,6 +1464,8 @@
                     
                     document.getElementById('nav-3').classList.add('disabled-nav');
                     document.getElementById('nav-1').classList.add('disabled-nav');
+                    document.getElementById('nav-4').classList.remove('disabled-nav');
+                    document.getElementById('nav-5').classList.remove('disabled-nav');
                     document.getElementById('unlock-msg').classList.add('hidden');
                     document.getElementById('next-page-container').classList.add('hidden');
                 }
