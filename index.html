@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>橋下的人：神婆手記</title>
+    <title>神婆手記</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         :root {
@@ -251,10 +251,12 @@
                     <div class="flex items-center justify-center md:justify-start gap-3 mt-1">
                         <span class="text-xs md:text-sm text-blue-400 font-black tracking-widest uppercase">Cultural Mission</span>
                         <select id="scale-selector" onchange="changeScale(this.value)" class="bg-slate-800 text-xs text-gray-300 border border-white/20 rounded-lg px-2 py-1 font-bold outline-none cursor-pointer">
-                            <option value="1">視圖 100%</option>
-                            <option value="0.9">視圖 90%</option>
-                            <option value="0.85">視圖 85%</option>
-                            <option value="0.75">視圖 75%</option>
+                            <option value="1">縮放：100%</option>
+                            <option value="0.9">縮放：90%</option>
+                            <option value="0.85">縮放：85%</option>
+                            <option value="0.75">縮放：75%</option>
+                            <option value="0.65">縮放：65%</option>
+                            <option value="0.5">縮放：50%</option>
                         </select>
                     </div>
                 </div>
@@ -275,7 +277,15 @@
         <main class="flex-1 w-full max-w-7xl mx-auto p-4 md:p-8 pb-32 md:pb-40">
             
             <section id="page1" class="page block animate-in fade-in duration-500">
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-10">
+
+                <div class="mt-1 flex justify-center">
+                    <button onclick="openHistoryResearch()" class="game-btn-3d px-10 py-5 bg-slate-800 text-amber-400 border border-amber-500/40 rounded-2xl font-black text-base md:text-lg hover:bg-slate-700">
+                        打小人職業在香港的歷史研究
+                    </button>
+                </div>
+               <div class="mt-8"> 
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 md:gap-10">
                     <div id="card-wang" onclick="readShaman('wang')" class="shaman-card flex flex-col sm:flex-row items-center sm:items-start p-8 md:p-10 rounded-[40px] cursor-pointer group">
                         <div class="w-32 h-32 md:w-40 md:h-40 shrink-0 rounded-3xl overflow-hidden border-4 border-amber-500/40 bg-slate-800 shadow-[0_0_20px_rgba(245,158,11,0.2)] group-hover:shadow-[0_0_30px_rgba(245,158,11,0.5)] transition-shadow">
                             <img src="https://i.imgur.com/VkGvfhB.png" alt="梁婆婆" class="w-full h-full object-cover">
@@ -283,7 +293,7 @@
                         <div class="mt-6 sm:mt-0 sm:ml-8 flex-1 text-center sm:text-left w-full">
                             <div class="flex flex-col sm:flex-row justify-between items-center sm:items-start gap-4">
                                 <h2 class="text-3xl md:text-4xl font-black text-white italic drop-shadow-md">梁婆婆</h2>
-                                <span id="reward-wang" class="text-amber-400 text-sm font-black bg-amber-500/10 px-4 py-2 rounded-xl border border-amber-500/30 whitespace-nowrap shadow-sm">+50 金幣</span>
+                                <span id="reward-wang" class="text-amber-400 text-sm font-black bg-amber-500/10 px-4 py-2 rounded-xl border border-amber-500/30 whitespace-nowrap shadow-sm">+50金幣</span>
                             </div>
                             <div class="flex flex-wrap justify-center sm:justify-start gap-2 mt-4">
                                 <span class="px-3 py-1 bg-amber-500/20 text-amber-400 text-sm font-black rounded-lg border border-amber-500/30 shadow-sm">鵝頸橋</span>
@@ -300,7 +310,7 @@
                         <div class="mt-6 sm:mt-0 sm:ml-8 flex-1 text-center sm:text-left w-full">
                             <div class="flex flex-col sm:flex-row justify-between items-center sm:items-start gap-4">
                                 <h2 class="text-3xl md:text-4xl font-black text-white italic drop-shadow-md">麥仙姑</h2>
-                                <span id="reward-li" class="text-amber-400 text-sm font-black bg-amber-500/10 px-4 py-2 rounded-xl border border-amber-500/30 whitespace-nowrap shadow-sm">+50 金幣</span>
+                                <span id="reward-li" class="text-amber-400 text-sm font-black bg-amber-500/10 px-4 py-2 rounded-xl border border-amber-500/30 whitespace-nowrap shadow-sm">+50金幣</span>
                             </div>
                             <div class="flex flex-wrap justify-center sm:justify-start gap-2 mt-4">
                                 <span class="px-3 py-1 bg-blue-500/20 text-blue-400 text-sm font-black rounded-lg border border-blue-500/30 shadow-sm">鵝頸橋</span>
@@ -311,17 +321,11 @@
                     </div>
                 </div>
 
-                <div class="mt-12 flex justify-center">
-                    <button onclick="openHistoryResearch()" class="game-btn-3d px-10 py-5 bg-slate-800 text-amber-400 border border-amber-500/40 rounded-2xl font-black text-base md:text-lg hover:bg-slate-700">
-                        📜 打小人職業在香港的歷史研究
-                    </button>
-                </div>
-
                 <div id="unlock-msg" class="mt-16 text-center text-gray-500 text-sm md:text-base font-black animate-pulse uppercase tracking-[0.3em] bg-black/20 py-4 rounded-2xl border border-white/5 max-w-2xl mx-auto">請完成兩位神婆的訪談錄以開啟任務</div>
                 
                 <div id="next-page-container" class="hidden mt-12 flex justify-center">
                     <button onclick="switchPage(2, '進入流程')" class="game-btn-3d w-full md:w-auto px-20 py-8 bg-blue-600 text-white rounded-[32px] font-black text-2xl active-glow shadow-[0_10px_30px_rgba(37,99,235,0.4)]">
-                        🚀 開啟儀式任務
+                        開啟儀式任務
                     </button>
                 </div>
             </section>
@@ -356,35 +360,35 @@
                             </div>
                             <div class="flex flex-col items-center gap-4">
                                 <button onclick="pickTool(this, 2)" class="game-btn-3d w-full aspect-square max-w-[140px] bg-slate-800/80 rounded-3xl border-2 border-white/10 flex items-center justify-center relative overflow-hidden group hover:border-blue-500/50">
-                                    <img src="https://i.imgur.com/Axnz46Y.png" alt="鞋子" class="w-4/5 h-4/5 object-contain floating-item" style="animation-delay: 0.2s">
+                                    <img src="https://i.imgur.com/Axnz46Y.png" alt="鞋子" class="w-4/5 h-4/5 object-contain floating-item">
                                     <div class="check-mark hidden absolute inset-0 bg-green-500/60 backdrop-blur-sm flex items-center justify-center text-5xl font-black text-white shadow-inner">✓</div>
                                 </button>
                                 <button onclick="showToolDetail('鞋子', 'https://i.imgur.com/Axnz46Y.png')" class="px-5 py-2 bg-white/5 hover:bg-white/10 text-xs md:text-sm text-gray-300 rounded-xl transition-colors font-bold border border-white/10">查看詳情</button>
                             </div>
                             <div class="flex flex-col items-center gap-4">
                                 <button onclick="pickTool(this, 3)" class="game-btn-3d w-full aspect-square max-w-[140px] bg-slate-800/80 rounded-3xl border-2 border-white/10 flex items-center justify-center relative overflow-hidden group hover:border-blue-500/50">
-                                    <img src="https://i.imgur.com/23jflNR.png" alt="紙老虎" class="w-4/5 h-4/5 object-contain floating-item" style="animation-delay: 0.4s">
+                                    <img src="https://i.imgur.com/j16ToVu.png" alt="紙老虎" class="w-4/5 h-4/5 object-contain floating-item">
                                     <div class="check-mark hidden absolute inset-0 bg-green-500/60 backdrop-blur-sm flex items-center justify-center text-5xl font-black text-white shadow-inner">✓</div>
                                 </button>
-                                <button onclick="showToolDetail('紙老虎', 'https://i.imgur.com/23jflNR.png')" class="px-5 py-2 bg-white/5 hover:bg-white/10 text-xs md:text-sm text-gray-300 rounded-xl transition-colors font-bold border border-white/10">查看詳情</button>
+                                <button onclick="showToolDetail('紙老虎', 'https://i.imgur.com/j16ToVu.png')" class="px-5 py-2 bg-white/5 hover:bg-white/10 text-xs md:text-sm text-gray-300 rounded-xl transition-colors font-bold border border-white/10">查看詳情</button>
                             </div>
                             <div class="flex flex-col items-center gap-4">
                                 <button onclick="pickTool(this, 4)" class="game-btn-3d w-full aspect-square max-w-[140px] bg-slate-800/80 rounded-3xl border-2 border-white/10 flex items-center justify-center relative overflow-hidden group hover:border-blue-500/50">
-                                    <img src="https://i.imgur.com/POu81DG.jpeg" alt="招財進寶符" class="w-full h-full object-cover floating-item rounded-2xl p-2" style="animation-delay: 0.6s">
+                                    <img src="https://i.imgur.com/POu81DG.jpeg" alt="招財進寶符" class="w-full h-full object-cover floating-item rounded-2xl p-2">
                                     <div class="check-mark hidden absolute inset-0 bg-green-500/60 backdrop-blur-sm flex items-center justify-center text-5xl font-black text-white shadow-inner">✓</div>
                                 </button>
                                 <button onclick="showToolDetail('招財進寶符', 'https://i.imgur.com/POu81DG.jpeg')" class="px-5 py-2 bg-white/5 hover:bg-white/10 text-xs md:text-sm text-gray-300 rounded-xl transition-colors font-bold border border-white/10">查看詳情</button>
                             </div>
                             <div class="flex flex-col items-center gap-4">
                                 <button onclick="pickTool(this, 5)" class="game-btn-3d w-full aspect-square max-w-[140px] bg-slate-800/80 rounded-3xl border-2 border-white/10 flex items-center justify-center relative overflow-hidden group hover:border-blue-500/50">
-                                    <img src="https://i.imgur.com/Q2463xo.jpeg" alt="五鬼符" class="w-full h-full object-cover floating-item rounded-2xl p-2" style="animation-delay: 0.8s">
+                                    <img src="https://i.imgur.com/Q2463xo.jpeg" alt="五鬼符" class="w-full h-full object-cover floating-item rounded-2xl p-2">
                                     <div class="check-mark hidden absolute inset-0 bg-green-500/60 backdrop-blur-sm flex items-center justify-center text-5xl font-black text-white shadow-inner">✓</div>
                                 </button>
                                 <button onclick="showToolDetail('五鬼符', 'https://i.imgur.com/Q2463xo.jpeg')" class="px-5 py-2 bg-white/5 hover:bg-white/10 text-xs md:text-sm text-gray-300 rounded-xl transition-colors font-bold border border-white/10">查看詳情</button>
                             </div>
                             <div class="flex flex-col items-center gap-4">
                                 <button onclick="pickTool(this, 6)" class="game-btn-3d w-full aspect-square max-w-[140px] bg-slate-800/80 rounded-3xl border-2 border-white/10 flex items-center justify-center relative overflow-hidden group hover:border-blue-500/50">
-                                    <img src="https://i.imgur.com/llETTa3.png" alt="香燭" class="w-4/5 h-4/5 object-contain floating-item" style="animation-delay: 1s">
+                                    <img src="https://i.imgur.com/llETTa3.png" alt="香燭" class="w-4/5 h-4/5 object-contain floating-items">
                                     <div class="check-mark hidden absolute inset-0 bg-green-500/60 backdrop-blur-sm flex items-center justify-center text-5xl font-black text-white shadow-inner">✓</div>
                                 </button>
                                 <button onclick="showToolDetail('香燭', 'https://i.imgur.com/llETTa3.png')" class="px-5 py-2 bg-white/5 hover:bg-white/10 text-xs md:text-sm text-gray-300 rounded-xl transition-colors font-bold border border-white/10">查看詳情</button>
@@ -400,7 +404,7 @@
                     <div class="game-panel p-8 md:p-12 border-amber-500/30 bg-gradient-to-b from-amber-900/10 to-slate-900/80">
                         <div class="text-center mb-10 flex flex-col items-center gap-2">
                             <h4 class="text-amber-500 font-black text-sm md:text-base uppercase tracking-[0.4em] bg-amber-500/10 px-6 py-2 rounded-full border border-amber-500/30">加購法器商店</h4>
-                            <p class="text-amber-400/80 text-sm font-bold">每件 50 金幣，強化儀式效力</p>
+                            <p class="text-amber-400/80 text-sm font-bold">每件50金幣，增加儀式效力</p>
                         </div>
                         <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 md:gap-10">
                             <div class="flex flex-col items-center gap-5 bg-slate-950/60 p-8 rounded-[32px] border border-white/10 shadow-lg hover:border-amber-500/30 transition-colors">
@@ -459,8 +463,8 @@
                             <span class="text-8xl md:text-[9rem] drop-shadow-xl z-20">🎙️</span>
                         </div>
                         <div class="flex flex-col sm:flex-row justify-center gap-6 mb-12 relative z-10">
-                            <button id="replay-audio-btn" onclick="startChantAuto()" class="w-full sm:w-auto px-12 py-6 bg-slate-800 hover:bg-slate-700 text-white rounded-[24px] font-black text-xl game-btn-3d flex items-center justify-center gap-3 border border-white/10">🔁 重播法音</button>
-                            <button id="skip-audio-btn" onclick="stopChant()" class="w-full sm:w-auto px-12 py-6 bg-gradient-to-r from-amber-700 to-amber-600 text-white rounded-[24px] font-black text-xl game-btn-3d flex items-center justify-center gap-3">⏭️ 跳過念誦</button>
+                            <button id="replay-audio-btn" onclick="startChantAuto()" class="w-full sm:w-auto px-12 py-6 bg-slate-800 hover:bg-slate-700 text-white rounded-[24px] font-black text-xl game-btn-3d flex items-center justify-center gap-3 border border-white/10">重播</button>
+                            <button id="skip-audio-btn" onclick="stopChant()" class="w-full sm:w-auto px-12 py-6 bg-gradient-to-r from-amber-700 to-amber-600 text-white rounded-[24px] font-black text-xl game-btn-3d flex items-center justify-center gap-3">⏭跳過</button>
                         </div>
                         <button id="finish-chant-btn" disabled onclick="unlockStep(4, '連擊挑戰')" class="w-full py-8 bg-gray-800 text-gray-500 rounded-[32px] font-black text-2xl italic relative z-10 transition-all">請稍候法事進行……</button>
                     </div>
@@ -474,7 +478,7 @@
                             <h3 class="text-2xl md:text-3xl font-black text-white mb-6 uppercase tracking-widest bg-red-600/80 px-8 py-2 rounded-full border border-red-400 shadow-lg">儀式進行中：痛擊小人</h3>
                             
                             <div class="mb-10 bg-black/60 px-8 py-6 rounded-[32px] border border-red-500/30 shadow-inner w-full max-w-xl">
-                                <span class="text-sm md:text-base text-gray-400 font-bold tracking-[0.3em] uppercase block mb-4">當前鎖定目標</span>
+                                <span class="text-sm md:text-base text-gray-400 font-bold tracking-[0.3em] uppercase block mb-4">目前鎖定目標</span>
                                 <span id="display-target-name" class="underline decoration-red-600 decoration-[6px] underline-offset-[12px] break-all">未知</span>
                             </div>
                             
@@ -506,7 +510,7 @@
                             <h3 class="text-3xl md:text-4xl font-black text-white italic mb-6 drop-shadow-md">摘茭請示神明</h3>
                             <div class="bg-black/40 inline-block px-8 py-4 rounded-3xl border border-white/5 mb-12">
                                 <p class="text-gray-300 text-base md:text-lg font-bold">擲出「聖茭」（一平一凸）確認儀式圓滿</p>
-                                <p class="text-amber-500 text-sm md:text-base mt-2 font-black tracking-wider">首擲免費，重擲50金幣/次</p>
+                                <p class="text-amber-500 text-sm md:text-base mt-2 font-black tracking-wider">首擲免費，每次重擲需花費50金幣</p>
                             </div>
                             
                             <div id="moon-blocks" class="flex justify-center gap-12 mb-12 h-40 md:h-48 items-center" style="perspective: 1200px;">
@@ -577,10 +581,10 @@
                 <div id="step-content-6" class="step-content hidden animate-in zoom-in duration-500">
                     <div class="game-panel p-16 md:p-24 text-center border-4 border-green-500/50 shadow-[0_0_50px_rgba(34,197,94,0.2)] bg-gradient-to-b from-green-900/20 to-slate-900/90">
                         <div class="w-40 h-40 md:w-48 md:h-48 bg-green-500/20 rounded-full mx-auto flex items-center justify-center text-[6rem] md:text-[8rem] mb-12 border-8 border-green-500/50 shadow-[0_0_30px_rgba(34,197,94,0.5)] animate-bounce">✅</div>
-                        <h3 class="text-5xl md:text-6xl font-black text-green-400 italic mb-6 drop-shadow-lg">儀式大圓滿！</h3>
-                        <p class="text-gray-300 font-bold mb-16 uppercase tracking-[0.4em] text-lg md:text-xl bg-black/40 inline-block px-8 py-3 rounded-full">傳統文化探索達成 100%</p>
+                        <h3 class="text-5xl md:text-6xl font-black text-green-400 italic mb-6 drop-shadow-lg">儀式完成！</h3>
+                        <p class="text-gray-300 font-bold mb-16 uppercase tracking-[0.4em] text-lg md:text-xl bg-black/40 inline-block px-8 py-3 rounded-full">傳統文化探索完成</p>
                         <div class="space-y-6 max-w-md mx-auto">
-                            <button onclick="goToReflection()" class="w-full py-8 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white rounded-[32px] font-black text-2xl game-btn-3d shadow-[0_10px_30px_rgba(79,70,229,0.5)] active-glow">進入心靈反思階段 ➔</button>
+                            <button onclick="goToReflection()" class="w-full py-8 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white rounded-[32px] font-black text-2xl game-btn-3d shadow-[0_10px_30px_rgba(79,70,229,0.5)] active-glow">進入心靈反思階段</button>
                         </div>
                     </div>
                 </div>
@@ -607,8 +611,8 @@
                     <h4 class="text-3xl md:text-4xl font-black text-red-500 italic drop-shadow-md">擊打未能平息怒火。</h4>
                     <p class="text-gray-300 leading-relaxed text-lg md:text-xl max-w-3xl mx-auto bg-black/30 p-8 rounded-3xl border border-white/5">如果你發現仇恨並未隨著鞋底的拍打而消散，那是因為執念仍困在你的心牢中。你現在想……</p>
                     <div class="space-y-6 max-w-2xl mx-auto">
-                        <button onclick="restartHitTask()" class="w-full py-8 bg-red-700 hover:bg-red-600 text-white rounded-[32px] font-black text-xl md:text-2xl game-btn-3d shadow-[0_10px_20px_rgba(185,28,28,0.4)]">🔥 不甘心，我要再打一次！</button>
-                        <button onclick="showPrayPath()" class="w-full py-8 bg-slate-800 hover:bg-slate-700 text-blue-400 border-2 border-blue-500/40 rounded-[32px] font-black text-xl md:text-2xl game-btn-3d">🕊️ 尋求另一種平靜（寬恕與祈禱）</button>
+                        <button onclick="restartHitTask()" class="w-full py-8 bg-red-700 hover:bg-red-600 text-white rounded-[32px] font-black text-xl md:text-2xl game-btn-3d shadow-[0_10px_20px_rgba(185,28,28,0.4)]">不甘心，我要再打一次！</button>
+                        <button onclick="showPrayPath()" class="w-full py-8 bg-slate-800 hover:bg-slate-700 text-blue-400 border-2 border-blue-500/40 rounded-[32px] font-black text-xl md:text-2xl game-btn-3d">尋求另一種平靜（寬恕與祈禱）</button>
                     </div>
                 </div>
 
@@ -616,7 +620,7 @@
                     <h4 class="text-3xl md:text-4xl font-black text-green-400 italic drop-shadow-md">釋放後的空白。</h4>
                     <p class="text-gray-300 leading-relaxed text-lg md:text-xl max-w-3xl mx-auto bg-black/30 p-8 rounded-3xl border border-white/5">情緒暫時宣洩了，但明天呢？仇恨只是暫時被壓制，而非治癒。你願意嘗試以「愛」來終結這場循環嗎？</p>
                     <div class="space-y-6 max-w-2xl mx-auto">
-                        <button onclick="showPrayPath()" class="w-full py-8 bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 text-white rounded-[32px] font-black text-xl md:text-2xl game-btn-3d shadow-[0_10px_30px_rgba(79,70,229,0.4)] active-glow">✨ 進入祈禱與寬恕之旅</button>
+                        <button onclick="showPrayPath()" class="w-full py-8 bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 text-white rounded-[32px] font-black text-xl md:text-2xl game-btn-3d shadow-[0_10px_30px_rgba(79,70,229,0.4)] active-glow">進入祈禱與寬恕之旅</button>
                     </div>
                 </div>
 
@@ -648,7 +652,7 @@
                             
                             <div id="pray-step-1" class="space-y-12 max-w-2xl mx-auto">
                                 <p class="text-gray-300 text-lg md:text-xl font-bold bg-slate-900/50 py-4 px-8 rounded-full border border-white/5">請在心中默念對方的名字，嘗試將「他」交給天主，而非鞋底。</p>
-                                <button onclick="startPrayAction()" class="w-full py-8 bg-gradient-to-r from-amber-400 to-yellow-500 hover:from-amber-300 hover:to-yellow-400 text-slate-900 rounded-[32px] font-black text-2xl game-btn-3d active-glow shadow-[0_15px_35px_rgba(251,191,36,0.5)]">🕯️ 點燃寬恕之燭</button>
+                                <button onclick="startPrayAction()" class="w-full py-8 bg-gradient-to-r from-amber-400 to-yellow-500 hover:from-amber-300 hover:to-yellow-400 text-slate-900 rounded-[32px] font-black text-2xl game-btn-3d active-glow shadow-[0_15px_35px_rgba(251,191,36,0.5)]">點燃寬恕之燭</button>
                             </div>
 
                             <div id="pray-step-2" class="hidden space-y-12 py-12 animate-in fade-in duration-1000">
@@ -661,34 +665,10 @@
                                     <p id="pray-text" class="text-2xl md:text-3xl text-white font-bold italic h-24 flex items-center justify-center drop-shadow-md">正在祈求內心的平靜……</p>
                                 </div>
                                 <div id="rosary-container" class="flex justify-center mt-8"></div>
-                                <button id="pray-finish-btn" onclick="switchPage(5, '鳴謝')" class="hidden mx-auto w-full max-w-xl py-8 bg-gradient-to-r from-green-600 to-emerald-500 text-white rounded-[32px] font-black text-2xl md:text-3xl game-btn-3d active-glow shadow-[0_10px_30px_rgba(16,185,129,0.5)]">
+                                <button id="pray-finish-btn" onclick="switchPage(4, '鳴謝')" class="hidden mx-auto w-full max-w-xl py-8 bg-gradient-to-r from-green-600 to-emerald-500 text-white rounded-[32px] font-black text-2xl md:text-3xl game-btn-3d active-glow shadow-[0_10px_30px_rgba(16,185,129,0.5)]">
                                     體驗圓滿結束
                                 </button>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section id="page4" class="page hidden">
-                <div class="game-panel p-8 md:p-16 space-y-10">
-                    <h2 class="text-3xl md:text-4xl font-black text-white italic text-center md:text-left drop-shadow-md">訪談資料庫 & 參考文獻</h2>
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-10">
-                        <div class="bg-slate-900/70 p-8 rounded-[32px] border border-white/10 space-y-6 shadow-inner">
-                            <h3 class="text-blue-400 font-black text-xl md:text-2xl mb-4 flex items-center gap-3"><span>🎥</span> YouTube</h3>
-                            <div class="aspect-video w-full rounded-2xl overflow-hidden bg-black border-2 border-white/10 shadow-lg">
-                                <iframe class="w-full h-full" src="https://www.youtube.com/embed/KhZT7_TlWCI" frameborder="0" allowfullscreen></iframe>
-                            </div>
-                        </div>
-                        <div class="bg-slate-900/70 p-8 rounded-[32px] border border-white/10 space-y-6 shadow-inner">
-                            <h3 class="text-blue-400 font-black text-xl md:text-2xl mb-4 flex items-center gap-3"><span>📚</span> 參考資料</h3>
-                            <ul class="space-y-4 text-base md:text-lg bg-black/30 p-6 rounded-2xl border border-white/5">
-                                <li class="flex items-start gap-3"><span class="text-amber-500 mt-1">▸</span><a href="https://www.bugi.tw/2015/09/blog-post_11.html" target="_blank" class="text-gray-300 hover:text-white underline decoration-blue-500/50 underline-offset-4 transition-colors font-medium">不羈 - 香港鵝頸橋打小人體驗</a></li>
-                                <li class="flex items-start gap-3"><span class="text-amber-500 mt-1">▸</span><a href="https://www.cache.org.hk/Contest/S48.pdf" target="_blank" class="text-gray-300 hover:text-white underline decoration-blue-500/50 underline-offset-4 transition-colors font-medium">長春社文化古蹟資源中心 - 研究報告</a></li>
-                                <li class="flex items-start gap-3"><span class="text-amber-500 mt-1">▸</span><a href="https://www.eduhk.hk/chineseculture/content/hkculture/tm/custom/custom01.pdf" target="_blank" class="text-gray-300 hover:text-white underline decoration-blue-500/50 underline-offset-4 transition-colors font-medium">教大 - 香港傳統習俗資料</a></li>
-                                <li class="flex items-start gap-3"><span class="text-amber-500 mt-1">▸</span><a href="https://www.history.cuhk.edu.hk/CourseWeb/201415/201415_hist5559/Final%20Report_Leungs%20gp.pdf" target="_blank" class="text-gray-300 hover:text-white underline decoration-blue-500/50 underline-offset-4 transition-colors font-medium">中大歷史系 - 打小人專題報告</a></li>
-                                <li class="flex items-start gap-3"><span class="text-amber-500 mt-1">▸</span><a href="https://hk.news.yahoo.com/%E9%A9%9A%E8%9F%84%EF%BD%9C%E9%B5%9D%E9%A0%B8%E6%A9%8B%E6%89%93%E5%B0%8F%E4%BA%BA%E7%94%9F%E6%84%8F%E7%96%AB%E5%BE%8C%E5%A5%BD%E8%BD%89-%E6%97%85%E5%AE%A2%E6%84%9B%E3%80%8C%E6%89%93%E3%80%8D%E7%97%85%E6%AF%92-%E6%AA%94%E4%B8%BB%EF%BC%9A%E8%BF%91%E5%B9%B4%E7%84%A1%E4%BA%BA%E3%80%8C%E6%89%93%E3%80%8D%E5%AE%官-020600797.html" target="_blank" class="text-gray-300 hover:text-white underline decoration-blue-500/50 underline-offset-4 transition-colors font-medium">Yahoo新聞 - 驚蟄打小人生意觀察</a></li>
-                            </ul>
                         </div>
                     </div>
                 </div>
@@ -699,8 +679,8 @@
                     <span class="text-7xl block mb-6 drop-shadow-lg">🎉</span>
                     <h2 class="text-4xl md:text-5xl font-black text-white italic drop-shadow-md">鳴謝名單與回饋</h2>
                     
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLScogWWPLMZy3VXsPLVAH46DB1Voa66EI_DZk95kA_cvND_Ebw/viewform" target="_blank" onclick="showThanksModal()" class="inline-block w-full md:w-auto px-16 py-8 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white rounded-[32px] font-black text-2xl game-btn-3d active-glow shadow-[0_10px_30px_rgba(37,99,235,0.4)]">
-                        📝 填寫體驗回饋表單
+                    <a href="https://forms.gle/WQDaWmCrHoLwBZk67" target="_blank" onclick="showThanksModal()" class="inline-block w-full md:w-auto px-16 py-8 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white rounded-[32px] font-black text-2xl game-btn-3d active-glow shadow-[0_10px_30px_rgba(37,99,235,0.4)]">
+                        填寫體驗回饋表單
                     </a>
 
                     <div class="bg-black/40 p-10 md:p-14 rounded-[40px] border border-white/10 text-gray-300 font-medium leading-loose text-lg md:text-xl shadow-inner mt-12">
@@ -787,7 +767,7 @@
             <span id="gold-alert-emoji" class="text-7xl md:text-8xl block mb-8 filter drop-shadow-lg">⚠️</span>
             <h3 id="gold-alert-title" class="text-3xl md:text-4xl font-black text-white mb-10 drop-shadow-md">金幣不足！</h3>
             <div id="ad-option-container" class="space-y-5">
-                <button onclick="watchAdForGold()" id="ad-btn" class="w-full py-6 bg-gradient-to-r from-amber-600 to-amber-50 hover:from-amber-500 hover:to-amber-400 text-white rounded-3xl font-black text-lg md:text-xl game-btn-3d shadow-lg">📺 看看我們的訪問影片 (+50金幣)</button>
+                <button onclick="watchAdForGold()" id="ad-btn" class="w-full py-6 bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-white rounded-3xl font-black text-lg md:text-xl game-btn-3d shadow-lg">看看我們的訪問影片（+50金幣）</button>
                 <button onclick="closeGoldAlert()" class="w-full py-6 bg-slate-800 hover:bg-slate-700 text-gray-300 rounded-3xl font-black text-lg md:text-xl game-btn-3d border border-white/10">稍後再說</button>
             </div>
         </div>
@@ -797,9 +777,8 @@
         <button id="nav-1" onclick="switchPage(1, '認識神婆')" class="flex flex-col items-center flex-1 text-blue-500 transition-all group pt-2"><span class="text-3xl md:text-4xl mb-1 group-hover:-translate-y-1 transition-transform">👵</span><span class="text-xs md:text-sm font-black uppercase tracking-wider">前導</span></button>
         <button id="nav-2" onclick="switchPage(2, '進入流程')" class="flex flex-col items-center flex-1 text-gray-500 disabled-nav transition-all group pt-2"><span class="text-3xl md:text-4xl mb-1 group-hover:-translate-y-1 transition-transform">📜</span><span class="text-xs md:text-sm font-black uppercase tracking-wider">任務</span></button>
         <button id="nav-3" onclick="switchPage(3, '心靈反思')" class="flex flex-col items-center flex-1 text-gray-500 disabled-nav transition-all group pt-2"><span class="text-3xl md:text-4xl mb-1 group-hover:-translate-y-1 transition-transform">✨</span><span class="text-xs md:text-sm font-black uppercase tracking-wider">反思</span></button>
-        <button id="nav-4" onclick="switchPage(4, '訪談資料')" class="flex flex-col items-center flex-1 text-gray-500 disabled-nav transition-all group pt-2"><span class="text-3xl md:text-4xl mb-1 group-hover:-translate-y-1 transition-transform">📚</span><span class="text-xs md:text-sm font-black uppercase tracking-wider">資料</span></button>
-        <button id="nav-5" onclick="switchPage(5, '鳴謝')" class="flex flex-col items-center flex-1 text-gray-500 disabled-nav transition-all group pt-2"><span class="text-3xl md:text-4xl mb-1 group-hover:-translate-y-1 transition-transform">🎉</span><span class="text-xs md:text-sm font-black uppercase tracking-wider">鳴謝</span></button>
-        <button id="nav-6" onclick="switchPage(6, '組員調查')" class="flex flex-col items-center flex-1 text-gray-500 disabled-nav transition-all group pt-2"><span class="text-3xl md:text-4xl mb-1 group-hover:-translate-y-1 transition-transform">📊</span><span class="text-xs md:text-sm font-black uppercase tracking-wider">調查</span></button>
+        <button id="nav-4" onclick="switchPage(4, '鳴謝')" class="flex flex-col items-center flex-1 text-gray-500 disabled-nav transition-all group pt-2"><span class="text-3xl md:text-4xl mb-1 group-hover:-translate-y-1 transition-transform">🎉</span><span class="text-xs md:text-sm font-black uppercase tracking-wider">鳴謝</span></button>
+        <button id="nav-5" onclick="switchPage(5, '組員調查')" class="flex flex-col items-center flex-1 text-gray-500 disabled-nav transition-all group pt-2"><span class="text-3xl md:text-4xl mb-1 group-hover:-translate-y-1 transition-transform">📊</span><span class="text-xs md:text-sm font-black uppercase tracking-wider">調查</span></button>
     </nav>
 
     <div id="modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6 bg-slate-950/90 backdrop-blur-xl">
@@ -885,7 +864,7 @@
         }
 
         function watchAdForGold() {
-            window.open('https://youtu.be/dQw4w9WgXcQ'); 
+            window.open('https://youtu.be/6VHomGpuVE4'); 
             userGold += 50;
             updateGoldUI();
             closeGoldAlert();
@@ -899,6 +878,22 @@
                 content.classList.remove('modal-exit-active');
                 content.classList.add('modal-enter');
             }, 300);
+        }
+
+                function openHistoryResearch() {
+            document.getElementById('modal-body').innerHTML = `
+                <div class="mb-12 text-center">
+                    <span class="px-5 py-2 bg-amber-500/20 text-amber-500 text-sm font-black rounded-full uppercase border border-amber-500/30">學術研究庫</span>
+                    <h2 class="text-4xl md:text-5xl font-black text-white mt-6 italic drop-shadow-md">打小人職業在香港的歷史研究</h2>
+                </div>
+                <div class="qa-mask bg-black/50 border-l-4 border-amber-500 mx-auto max-w-3xl">
+                    <div class="text-gray-300 text-base md:text-lg leading-loose space-y-6 font-medium">
+                        <p>「打小人」在香港的歷史可追溯至明清時期的厭勝傳統，並在戰後移民社會中定型。目前最早的具體記載於20世紀初的珠江三角洲民俗記錄。<br><br>打小人源於中國古代的巫術，後融入華南地區的「五鬼」信仰。香港的打小人儀式，最前身是戰前難民帶入的「拜小人」習俗。<br><br>隨著市區重建，原本分散於各區市場的「打小人」攤檔被邊緣化。鵝頸橋底因長年有橋蔭遮擋，且有路口聚陰的傳說，吸引多名「神婆」聚集，從此成為地標。<br><br>1990年代至2000年代初，本港經歷了沙士，雷曼兄弟迷你債券事件等，以致香港經濟急速下滑。由於經濟與社會壓力，「打小人」人數急劇上升。2009年，美國《時代》雜誌更將其評為「亞洲最佳消解怨氣方式」。<br><br>2010年代後，儀式進一步商業化與符號化。香港政府於2014年將其納入「首份非物質文化遺產清單」，鵝頸橋下的打小人成為旅遊看點。<br><br>在過去，社會制度尚未完善，法律與調解機制也較薄弱。當一般市民遇到殖民管治官員不公平對待或工作上的人際衝突時，往往缺乏有效的申訴和情緒抒壓渠道。在這種情況下，「打小人」便成為一種宗教上的情緒宣洩方式。雖然它無法真正解決問題，但能讓當事人心理上感到釋懷。從社會學角度看，這有效幫助社會緩和人際間的緊張關係。<br><br>隨著社會不斷發展，本港的法治、公共服務和社區支援系統已相當成熟。市民遇上糾紛時，可以透過報警、調解甚至法律途徑來處理，不再需要依賴儀式來「懲罰」他人。因此，「打小人」原有的社會功能逐漸減弱。但仍有不少善信仍然會透過打小人抒發心中情緒，因此每年其熱度仍未減。</p>
+                    </div>
+                </div>
+                <button onclick="closeModal()" class="w-full max-w-lg mx-auto block mt-12 py-6 bg-slate-800 hover:bg-slate-700 text-white rounded-3xl font-black text-xl game-btn-3d border border-white/10">關閉面板</button>
+            `;
+            openModal();
         }
 
         function showToolDetail(name, imgUrl) {
@@ -1024,7 +1019,7 @@
                     <p class="text-gray-300 mt-6 text-lg bg-black/30 inline-block px-8 py-3 rounded-full">您的回饋對我們非常重要。</p>
                 </div>
                 <div class="space-y-6 max-w-lg mx-auto">
-                    <button onclick="location.reload()" class="w-full py-6 bg-gradient-to-r from-green-600 to-green-500 text-white rounded-3xl font-black text-xl md:text-2xl game-btn-3d shadow-[0_10px_20px_rgba(22,163,74,0.4)] active-glow">🔄 重新體驗遊戲</button>
+                    <button onclick="location.reload()" class="w-full py-6 bg-gradient-to-r from-green-600 to-green-500 text-white rounded-3xl font-black text-xl md:text-2xl game-btn-3d shadow-[0_10px_20px_rgba(22,163,74,0.4)] active-glow">重新體驗遊戲</button>
                     <button onclick="closeModal()" class="w-full py-6 bg-slate-800 hover:bg-slate-700 text-gray-400 rounded-3xl font-black text-xl md:text-2xl game-btn-3d border border-white/10">關閉</button>
                 </div>
             `;
@@ -1069,7 +1064,7 @@
             
             if (shamanReadStatus.wang && shamanReadStatus.li) {
                 updateExp(40);
-                document.getElementById('unlock-msg').innerHTML = "<span class='text-green-400 bg-green-900/30 px-6 py-2 rounded-full border border-green-500/30 block shadow-[0_0_15px_rgba(34,197,94,0.3)]'>✅ 準備就緒！已解鎖兩位神婆資訊</span>";
+                document.getElementById('unlock-msg').innerHTML = "<span class='text-green-400 bg-green-900/30 px-6 py-2 rounded-full border border-green-500/30 block shadow-[0_0_15px_rgba(34,197,94,0.3)]'>準備就緒！</span>";
                 document.getElementById('unlock-msg').classList.remove('animate-pulse');
                 document.getElementById('next-page-container').classList.remove('hidden');
                 [2, 4, 5, 6].forEach(i => document.getElementById(`nav-${i}`).classList.remove('disabled-nav'));
@@ -1225,7 +1220,7 @@
                     btn.innerText = "完成發洩！返回反思";
                     btn.onclick = function() { returnFromRestartHit(); };
                 } else {
-                    btn.innerText = "打擊完成！進入摘茭請示 ➔"; 
+                    btn.innerText = "打擊完成！進入摘茭請示"; 
                     btn.onclick = function() { unlockStep(5, '摘茭請示'); };
                 }
                 
@@ -1238,7 +1233,7 @@
             if (tossCount > 0 && userGold < 50) {
                 document.getElementById('ad-btn').classList.remove('hidden');
                 document.getElementById('gold-alert-emoji').innerText = "⚠️";
-                document.getElementById('gold-alert-title').innerText = "需要 50 金幣再次請示神明";
+                document.getElementById('gold-alert-title').innerText = "需花費50金幣再次請示神明";
                 document.getElementById('gold-alert-title').classList.replace('text-amber-400', 'text-white');
                 
                 document.getElementById('gold-alert').classList.remove('hidden');
